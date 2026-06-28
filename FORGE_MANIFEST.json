@@ -1,0 +1,209 @@
+{
+  "_meta": {
+    "role": "canonical forge/lib base \u2014 the ONE location",
+    "source": "repo_harvest CQECMPLX-Production cqecmplx-forge/src + cqekernel",
+    "package_count": 50
+  },
+  "packages": {
+    "AGRMForge": {
+      "content_hash": "e89b3ab3118eaa8c",
+      "py_files": 1
+    },
+    "AuthenticaForge": {
+      "content_hash": "51143f6da1f402dd",
+      "py_files": 1
+    },
+    "CADForge": {
+      "content_hash": "4996ff7ceacc3e42",
+      "py_files": 1
+    },
+    "ChromaForge": {
+      "content_hash": "f63a892193e172ba",
+      "py_files": 12
+    },
+    "ConvergeForge": {
+      "content_hash": "5a4e7c0d438228a3",
+      "py_files": 2
+    },
+    "cqecmplx": {
+      "content_hash": "25881858d3547eba",
+      "py_files": 56
+    },
+    "cqekernel": {
+      "content_hash": "a6dba15b1c6d84dd",
+      "py_files": 100
+    },
+    "CrystalForge": {
+      "content_hash": "b128e356dc89fccf",
+      "py_files": 5
+    },
+    "DoublingForge": {
+      "content_hash": "e5801ebaa57fd2c0",
+      "py_files": 1
+    },
+    "E8Forge": {
+      "content_hash": "508434d1f4148e44",
+      "py_files": 1
+    },
+    "EntropyForge": {
+      "content_hash": "a02d128b299a75bb",
+      "py_files": 1
+    },
+    "FieldFormForge": {
+      "content_hash": "77560afb76054752",
+      "py_files": 1
+    },
+    "FoldForge": {
+      "content_hash": "cfd66af3f26a1760",
+      "py_files": 1
+    },
+    "forgefactory": {
+      "content_hash": "e7b417d952cc69bb",
+      "py_files": 8
+    },
+    "ForgeFamilyBlueprint": {
+      "content_hash": "94b291fa606b4158",
+      "py_files": 1
+    },
+    "FridgeForge": {
+      "content_hash": "28c09a9557b2c18f",
+      "py_files": 3
+    },
+    "GraphStax": {
+      "content_hash": "6a268aaa661709d1",
+      "py_files": 5
+    },
+    "GroundingForge": {
+      "content_hash": "465937c9c5ead126",
+      "py_files": 1
+    },
+    "KnightForge": {
+      "content_hash": "a727bca1e853ac83",
+      "py_files": 1
+    },
+    "lattice_forge": {
+      "content_hash": "660eccff64d30f38",
+      "py_files": 161
+    },
+    "LeechForge": {
+      "content_hash": "87845d9e263905c0",
+      "py_files": 1
+    },
+    "LinkForge": {
+      "content_hash": "11f5c745421fe2c9",
+      "py_files": 1
+    },
+    "MandleForge": {
+      "content_hash": "ae5b6381451fff13",
+      "py_files": 1
+    },
+    "ManiForge": {
+      "content_hash": "8c9249e4dd355586",
+      "py_files": 1
+    },
+    "MassResidueForge": {
+      "content_hash": "ca3084a792f6c282",
+      "py_files": 1
+    },
+    "MDHGForge": {
+      "content_hash": "051bc368138f26cf",
+      "py_files": 1
+    },
+    "MetaForge": {
+      "content_hash": "356f09d5e0e0246f",
+      "py_files": 1
+    },
+    "MorphForge": {
+      "content_hash": "1af98c81e2a141fa",
+      "py_files": 1
+    },
+    "NextNeedsReview": {
+      "content_hash": "6efeff6452606603",
+      "py_files": 1
+    },
+    "PixelForge": {
+      "content_hash": "88eebb86a43b72d8",
+      "py_files": 19
+    },
+    "PolyForge": {
+      "content_hash": "58a1be93903cb1af",
+      "py_files": 1
+    },
+    "QuarkFaceForge": {
+      "content_hash": "4fab396454283d58",
+      "py_files": 1
+    },
+    "R30Circuit": {
+      "content_hash": "4772b47903eede09",
+      "py_files": 1
+    },
+    "ReadoutForge": {
+      "content_hash": "fdaf5f8e74a71860",
+      "py_files": 1
+    },
+    "reforge_engine_contracts": {
+      "content_hash": "edf89ed737a9bca4",
+      "py_files": 3
+    },
+    "reforge_engine_hardening": {
+      "content_hash": "afd458d80edefd7c",
+      "py_files": 3
+    },
+    "reforge_frameforge": {
+      "content_hash": "9d3d426a722d9c7e",
+      "py_files": 2
+    },
+    "reforge_glyphforge": {
+      "content_hash": "44998cf5fde87b72",
+      "py_files": 4
+    },
+    "reforge_kimi_adapter": {
+      "content_hash": "7e111c5332a1da19",
+      "py_files": 3
+    },
+    "reforge_pixl8forge": {
+      "content_hash": "375c78dff450b036",
+      "py_files": 7
+    },
+    "reforge_pixleforge": {
+      "content_hash": "4f9348ff100fb60b",
+      "py_files": 4
+    },
+    "reforge_researchcraft": {
+      "content_hash": "c7ba18d4faaad07a",
+      "py_files": 3
+    },
+    "reforge_wireforge": {
+      "content_hash": "349e1a3113e39641",
+      "py_files": 3
+    },
+    "rhenium_engine": {
+      "content_hash": "e41a21497c3f469c",
+      "py_files": 5
+    },
+    "SceneForge": {
+      "content_hash": "729ad9a5ec888adf",
+      "py_files": 4
+    },
+    "SentinelForge": {
+      "content_hash": "14db945e37a2eb0f",
+      "py_files": 1
+    },
+    "SplatForge": {
+      "content_hash": "05a7bb89e2452b8e",
+      "py_files": 20
+    },
+    "SplatForgeField": {
+      "content_hash": "e9c3e3a53b383bc8",
+      "py_files": 7
+    },
+    "TriadForge": {
+      "content_hash": "08c1a35710af4f60",
+      "py_files": 1
+    },
+    "WireBlock": {
+      "content_hash": "2cbba243029da54d",
+      "py_files": 1
+    }
+  }
+}

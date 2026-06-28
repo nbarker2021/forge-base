@@ -1,0 +1,776 @@
+{
+  "version": "0.27.0",
+  "generated": "2026-06-13",
+  "kernel": "cqekernel",
+  "forge_ring": "cqecmplx-forge",
+  "namespace": "cqecmplx",
+  "unified_integration": {
+    "description": "All products promoted in single phase \u2014 kernel substrate, forge engines, and applications unified under cqecmplx namespace",
+    "principle": "No phased gating \u2014 every fully built product from D:/CQE_CMPLX enters the ring at once with its natural dependency tier"
+  },
+  "forges": {
+    "lattice_forge": {
+      "type": "substrate",
+      "role": "Proven substrate: Rule 30 chart algebra, J3(O)/F4 registration, Binary Boundary Adapter, lattice code chains, oloid carriers, ledgers",
+      "algebra_deps": [
+        "Rule30",
+        "J3O",
+        "F4",
+        "D12",
+        "VOA",
+        "Oloid",
+        "BinaryBoundary"
+      ],
+      "cli_entry": "lattice_forge.cli",
+      "paper_ref": "CL_proof-source-lattice-forge-inventory.md",
+      "source": "production/packages/cqecmplx-forge/src/lattice_forge/",
+      "union_branches": [
+        "PROOF (54 modules)",
+        "PartsFactory v0.3 (116 files)"
+      ],
+      "diverged_adjudicated": 9,
+      "verify_status": "10/10"
+    },
+    "ChromaForge": {
+      "type": "engine",
+      "role": "Event Law machinery: Merkle receipts, conservation, idempotent cache (f(f(x))=f(x)), crystal store",
+      "algebra_deps": [
+        "EventLaw",
+        "Merkle",
+        "CrystalVault",
+        "IdempotentCache"
+      ],
+      "cli_entry": "ChromaForge.ChromaForgeEngine",
+      "source": "production/packages/cqecmplx-forge/src/ChromaForge/",
+      "verify_status": "10/10",
+      "paper_ref": "CQE-paper-09",
+      "conservation_law": "kappa = ln(phi)/16; morphon delta <= 0 Hamiltonian descent; sectors N/I/L; Event Law delta = -kappa",
+      "source_repo_conservation": "nbarker2021/CMPLX-TMN-main (sign contradiction adjudicated)",
+      "receipt": "production/formal-papers/CQE-paper-09/kappa_conservation_law_receipt.json"
+    },
+    "GraphStax": {
+      "type": "engine",
+      "role": "Graph identity: bit -> C-gluon resolution, AGRM routing, superpermutation supervisor cursor (PermForge)",
+      "algebra_deps": [
+        "Cgluon",
+        "AGRM",
+        "Superperm",
+        "PermForge"
+      ],
+      "cli_entry": "GraphStax.coverage_check",
+      "source": "production/packages/cqecmplx-forge/src/GraphStax/",
+      "verify_status": "10/10"
+    },
+    "PixelForge": {
+      "type": "engine",
+      "role": "Display/input plane: adaptive-resolution surfaces, stylus/touch ink, E8 projection, deterministic frame streams",
+      "algebra_deps": [
+        "RGB=LCR",
+        "T_EMISSION",
+        "Picture",
+        "VideoSynth",
+        "FrameStream",
+        "Paint"
+      ],
+      "cli_entry": "PixelForge.paint",
+      "source": "production/packages/cqecmplx-forge/src/PixelForge/",
+      "verify_status": "10/10"
+    },
+    "FridgeForge": {
+      "type": "engine",
+      "role": "Applied engine: inventory lexicon, meal lanes with hard constraints, templated shopping lists",
+      "algebra_deps": [
+        "InventoryLexicon",
+        "MealLanes",
+        "ShoppingListTemplate"
+      ],
+      "cli_entry": "FridgeForge.InventoryEngine",
+      "source": "production/packages/cqecmplx-forge/src/FridgeForge/",
+      "verify_status": "10/10"
+    },
+    "LinkForge": {
+      "type": "engine",
+      "role": "External databases as lib items: json/csv/ics linked once, receipted, reused",
+      "algebra_deps": [
+        "JsonLink",
+        "CsvLink",
+        "IcsLink",
+        "ReceiptedReuse"
+      ],
+      "cli_entry": "LinkForge.JsonLink",
+      "source": "production/packages/cqecmplx-forge/src/LinkForge/",
+      "verify_status": "10/10"
+    },
+    "MandleForge": {
+      "type": "engine",
+      "role": "Forge conventions for Mandelbrot surfaces",
+      "algebra_deps": [
+        "Mandelbrot",
+        "IterationEscape",
+        "ColorMapping"
+      ],
+      "cli_entry": "MandleForge.MandelbrotEngine",
+      "source": "production/packages/cqecmplx-forge/src/MandleForge/",
+      "verify_status": "10/10"
+    },
+    "ManiForge": {
+      "type": "engine",
+      "role": "Forge conventions for manifold surfaces",
+      "algebra_deps": [
+        "Manifold",
+        "Atlas",
+        "Charts",
+        "TransitionMaps"
+      ],
+      "cli_entry": "ManiForge.ManifoldEngine",
+      "source": "production/packages/cqecmplx-forge/src/ManiForge/",
+      "verify_status": "10/10"
+    },
+    "SceneForge": {
+      "type": "engine",
+      "role": "Worldforge (P5\u2192B_obs\u2192Rrho\u2192B_soft\u2192B_higgs\u2192B_ward\u2192Bridge), Intent (Scene8: 240-root E8 walks), ImageDB (real pictures indexed)",
+      "algebra_deps": [
+        "WorldForge",
+        "IntentSlice",
+        "E8LatticeWalk",
+        "ImageDB"
+      ],
+      "cli_entry": "cqecmplx.engines.scene",
+      "source": "production/packages/cqecmplx-forge/src/SceneForge/",
+      "verify_status": "10/10"
+    },
+    "forgefactory": {
+      "type": "reforge",
+      "role": "Factory orchestration (ForgeFactory v0.3 lineage)",
+      "algebra_deps": [
+        "FactoryOrchestration",
+        "LineageTracking"
+      ],
+      "cli_entry": "forgefactory.Factory",
+      "source": "production/packages/cqecmplx-forge/src/forgefactory/",
+      "verify_status": "10/10"
+    },
+    "reforge_engine_contracts": {
+      "type": "reforge",
+      "role": "Engine contract definitions",
+      "algebra_deps": [
+        "ContractSchema",
+        "ReceiptTrail"
+      ],
+      "cli_entry": "reforge_engine_contracts.ContractRegistry",
+      "source": "production/packages/cqecmplx-forge/src/reforge_engine_contracts/",
+      "verify_status": "10/10"
+    },
+    "reforge_engine_hardening": {
+      "type": "reforge",
+      "role": "Hardening & receipt trail",
+      "algebra_deps": [
+        "Hardening",
+        "ReceiptTrail",
+        "Falsification"
+      ],
+      "cli_entry": "reforge_engine_hardening.Hardener",
+      "source": "production/packages/cqecmplx-forge/src/reforge_engine_hardening/",
+      "verify_status": "10/10"
+    },
+    "reforge_frameforge": {
+      "type": "reforge",
+      "role": "Frame operations",
+      "algebra_deps": [
+        "FrameAlgebra",
+        "LCR",
+        "BoundaryAperture"
+      ],
+      "cli_entry": "reforge_frameforge.FrameOps",
+      "source": "production/packages/cqecmplx-forge/src/reforge_frameforge/",
+      "verify_status": "10/10"
+    },
+    "reforge_glyphforge": {
+      "type": "reforge",
+      "role": "Glyph encoding/decoding",
+      "algebra_deps": [
+        "GlyphAlphabet",
+        "Encoding",
+        "Decoding",
+        "Fumu"
+      ],
+      "cli_entry": "reforge_glyphforge.GlyphCodec",
+      "source": "production/packages/cqecmplx-forge/src/reforge_glyphforge/",
+      "verify_status": "10/10"
+    },
+    "reforge_kimi_adapter": {
+      "type": "reforge",
+      "role": "KIMI adapter",
+      "algebra_deps": [
+        "KIMIProtocol",
+        "AdapterBoundary"
+      ],
+      "cli_entry": "reforge_kimi_adapter.KIMIAdapter",
+      "source": "production/packages/cqecmplx-forge/src/reforge_kimi_adapter/",
+      "verify_status": "10/10"
+    },
+    "reforge_pixl8forge": {
+      "type": "reforge",
+      "role": "Pixel forge variant (8-bit)",
+      "algebra_deps": [
+        "PixelForge8bit",
+        "LCR",
+        "Emission"
+      ],
+      "cli_entry": "reforge_pixl8forge.Pixl8Engine",
+      "source": "production/packages/cqecmplx-forge/src/reforge_pixl8forge/",
+      "verify_status": "10/10"
+    },
+    "reforge_pixleforge": {
+      "type": "reforge",
+      "role": "Pixel forge variant (element-wise)",
+      "algebra_deps": [
+        "PixelForgeElement",
+        "LCR",
+        "Emission"
+      ],
+      "cli_entry": "reforge_pixleforge.PixleEngine",
+      "source": "production/packages/cqecmplx-forge/src/reforge_pixleforge/",
+      "verify_status": "10/10"
+    },
+    "reforge_researchcraft": {
+      "type": "reforge",
+      "role": "Research workflow engine",
+      "algebra_deps": [
+        "ResearchFlow",
+        "HypothesisTracking",
+        "EvidenceChain"
+      ],
+      "cli_entry": "reforge_researchcraft.ResearchEngine",
+      "source": "production/packages/cqecmplx-forge/src/reforge_researchcraft/",
+      "verify_status": "10/10"
+    },
+    "reforge_wireforge": {
+      "type": "reforge",
+      "role": "Wire/transport forge",
+      "algebra_deps": [
+        "WireProtocol",
+        "Transport",
+        "FrameStream"
+      ],
+      "cli_entry": "reforge_wireforge.WireEngine",
+      "source": "production/packages/cqecmplx-forge/src/reforge_wireforge/",
+      "verify_status": "10/10"
+    },
+    "rhenium_engine": {
+      "type": "reforge",
+      "role": "Rhenium/Re/75 identity-aligned engine",
+      "algebra_deps": [
+        "RheniumIdentity",
+        "Atomic75",
+        "ReOxidationStates"
+      ],
+      "cli_entry": "rhenium_engine.RheniumEngine",
+      "source": "production/packages/cqecmplx-forge/src/rhenium_engine/",
+      "verify_status": "10/10"
+    },
+    "EntropyForge": {
+      "type": "engine",
+      "role": "Rule 30 center-column entropy: canonical column (paper-bound), seeded streams, XOR debias, VOA partition syndromes Z(q)=2q^0+6q^5",
+      "algebra_deps": [
+        "Rule30",
+        "VOA",
+        "D4",
+        "S3",
+        "MonsterScalar196883"
+      ],
+      "cli_entry": "EntropyForge.verify",
+      "paper_ref": "CQE-paper-12",
+      "source": "production/packages/cqecmplx-forge/src/EntropyForge/",
+      "source_product": "historical_pastworks/product_entropy (core distilled)",
+      "adjudicated_divergence": "product seeded only the syndrome chain; forge seeds the CA initial window; canonical mode preserved as the paper-bound object",
+      "receipt": "production/formal-papers/CQE-paper-12/center_column_entropy_receipt.json",
+      "verify_status": "10/10"
+    },
+    "SentinelForge": {
+      "type": "engine",
+      "role": "Correction-surface monitor: 2/2/4 triad partition law, syndrome fingerprints, exact binomial deviation proofs, severity ladder",
+      "algebra_deps": [
+        "Rule30",
+        "Rule90",
+        "CorrectionBit",
+        "VOA",
+        "LieConjugates",
+        "BinomialExact"
+      ],
+      "cli_entry": "SentinelForge.verify",
+      "paper_ref": "CQE-paper-02",
+      "source": "production/packages/cqecmplx-forge/src/SentinelForge/",
+      "source_product": "historical_pastworks/product_sentinel (core distilled)",
+      "adjudicated_divergence": "product approximated p-values (normal, n>100); forge uses exact math.comb binomial for all n; async/API/agent layers stay product-side",
+      "receipt": "production/formal-papers/CQE-paper-02/correction_surface_monitor_receipt.json",
+      "verify_status": "10/10"
+    },
+    "ConvergeForge": {
+      "type": "engine",
+      "role": "Triality annealing: S3 transpositions drive any 3-bit state into the Lie-conjugate basin in <=3 swaps (tight); load-triple scheduler",
+      "algebra_deps": [
+        "S3",
+        "WeylA2",
+        "Triality",
+        "LieConjugates",
+        "CayleyDiameter"
+      ],
+      "cli_entry": "ConvergeForge.verify",
+      "paper_ref": "CQE-paper-03",
+      "source": "production/packages/cqecmplx-forge/src/ConvergeForge/",
+      "source_product": "historical_pastworks/product_converge (core distilled)",
+      "adjudicated_divergence": "source docstring named (1,1,0) as the 3-swap witness; exhaustive verification shows the tight states are (0,1,1) and (1,0,0); gRPC/REST/consensus layers stay product-side",
+      "receipt": "production/formal-papers/CQE-paper-03/triality_annealing_receipt.json",
+      "verify_status": "10/10 + d4_atlas 10/10",
+      "modules": [
+        "__init__ (S3 triality annealing)",
+        "d4_atlas (D4 chart bijectivity)"
+      ],
+      "d4_atlas_receipt": "production/formal-papers/CQE-paper-03/d4_atlas_bijectivity_receipt.json"
+    },
+    "AuthenticaForge": {
+      "type": "engine",
+      "role": "Lattice code closure: 5-term lattice [1,3,7,21,137], CRT binding digit (sum=119 mod 153), offline mod-17 verification, HMAC gate",
+      "algebra_deps": [
+        "FiveTermLattice",
+        "CRT",
+        "DigitalRoot",
+        "Mod17",
+        "HMAC"
+      ],
+      "cli_entry": "AuthenticaForge.verify",
+      "paper_ref": "CQE-paper-08",
+      "source": "production/packages/cqecmplx-forge/src/AuthenticaForge/",
+      "source_product": "historical_pastworks/product_authentica (core distilled)",
+      "adjudicated_divergence": "global sequence counter removed (explicit param); check digit shown constant-2 (not independent); QR codec rewritten for unbounded d5; API/SDK stay product-side",
+      "receipt": "production/formal-papers/CQE-paper-08/lattice_code_closure_receipt.json",
+      "verify_status": "10/10"
+    },
+    "E8Forge": {
+      "type": "engine",
+      "role": "Exact E8 lattice: membership in doubled integer coordinates, 240 roots (112+128), closure receipts, algorithmic simple system, Cartan/Dynkin verification",
+      "algebra_deps": [
+        "E8",
+        "EvenUnimodular",
+        "WeylE8",
+        "CartanMatrix",
+        "Dynkin"
+      ],
+      "cli_entry": "E8Forge.verify",
+      "paper_ref": "CQE-paper-08",
+      "source": "production/packages/cqecmplx-forge/src/E8Forge/",
+      "source_repo": "nbarker2021/CMPLXUNI (lfai/cona_e8.py surrogate adjudicated, lattice/e8.py made stdlib-exact)",
+      "adjudicated_divergence": "lfai constructionA_E8_check surrogate provably rejects all 112 integer roots and cannot represent half-integer roots; replaced with exact membership",
+      "receipt": "production/formal-papers/CQE-paper-08/e8_even_lattice_receipt.json",
+      "verify_status": "10/10"
+    },
+    "LeechForge": {
+      "type": "engine",
+      "role": "Golay -> Leech tower: extended Golay [24,12,8] code (Steiner S(5,8,24)), exact 24D lattice membership, all 196560 minimal vectors constructed",
+      "algebra_deps": [
+        "GolayCode",
+        "Steiner_5_8_24",
+        "LeechLattice",
+        "Kissing196560",
+        "TowerE8"
+      ],
+      "cli_entry": "LeechForge.verify",
+      "paper_ref": "CQE-paper-17",
+      "source": "production/packages/cqecmplx-forge/src/LeechForge/",
+      "source_repo": "nbarker2021/CMPLX (VERIFICATION_REPORT constants computed, not cited)",
+      "adjudicated_divergence": "report constants reproduced by construction; Golay B-matrix needs the NON-residue QR(11) convention (residue convention yields a non-Golay code, caught by the weight-enumerator check)",
+      "receipt": "production/formal-papers/CQE-paper-17/golay_leech_tower_receipt.json",
+      "verify_status": "10/10"
+    },
+    "MDHGForge": {
+      "type": "engine",
+      "role": "Multi-scale geometric hash cache: 24D Leech-space quantize->2D slot retraction, SpeedLight idempotence f(f(x))=f(x), deterministic LRU eviction, fast/med/slow layers",
+      "algebra_deps": [
+        "LeechDim24",
+        "Quantize",
+        "DoubleHash",
+        "Idempotence",
+        "Hamming"
+      ],
+      "cli_entry": "MDHGForge.verify",
+      "paper_ref": "CQE-paper-07",
+      "source": "production/packages/cqecmplx-forge/src/MDHGForge/",
+      "source_repo": "nbarker2021/CMPLXDevKit (mcp_os/agrm_mdhg_integration/mdhg_ca.py)",
+      "adjudicated_divergence": "quantize made total on all reals; eviction made deterministic via monotonic seq (source used wall clock); CA-field dynamics stay product-side",
+      "receipt": "production/formal-papers/CQE-paper-07/mdhg_speedlight_bridge_receipt.json",
+      "verify_status": "10/10"
+    },
+    "AGRMForge": {
+      "type": "engine",
+      "role": "Golden-ratio low-discrepancy sweep over 24D space: three-gap theorem optimal reader, zone density, radial shells, idempotent route cache",
+      "algebra_deps": [
+        "GoldenRatio",
+        "ThreeGapTheorem",
+        "LowDiscrepancy",
+        "LeechDim24",
+        "Equidistribution"
+      ],
+      "cli_entry": "AGRMForge.verify",
+      "paper_ref": "CQE-paper-21",
+      "source": "production/packages/cqecmplx-forge/src/AGRMForge/",
+      "source_repo": "nbarker2021/CMPLXMCP (agrm_mdhg_integration/agrm_router.py)",
+      "adjudicated_divergence": "pure order-stable golden sweep separated from heuristic density bonus; route cache made idempotent; resonance/random heuristics product-side",
+      "receipt": "production/formal-papers/CQE-paper-21/agrm_golden_sweep_receipt.json",
+      "verify_status": "10/10"
+    },
+    "ReadoutForge": {
+      "type": "engine",
+      "role": "O(log N) Rule 30 readout: aggregate-during-enumeration lib, readout(N)=Lucas(N) XOR lib[N], bounded frontier repair (3-move closure), idempotent reuse",
+      "algebra_deps": [
+        "LucasClosedForm",
+        "CorrectionTape",
+        "EventLawIdempotence",
+        "ThreeMoveClosure",
+        "AddressedLib"
+      ],
+      "cli_entry": "ReadoutForge.verify",
+      "paper_ref": "CQE-paper-10",
+      "source": "production/packages/cqecmplx-forge/src/ReadoutForge/",
+      "architecture": "the whole lib reapplied to the readout; tables built DURING enumeration before any state uses the data",
+      "receipt": "production/formal-papers/CQE-paper-10/ologn_readout_architecture_receipt.json",
+      "honesty_boundary": "bounds READOUT not enumeration; cold extraction remains open Wolfram Problem 3",
+      "verify_status": "10/10"
+    },
+    "TriadForge": {
+      "type": "engine",
+      "role": "The 3-fold keystone: 2^k Rule90 rows = 3^k live cells (Sierpinski), Lucas already generalizes 3, triad recurs at every stage; census across all bound forges",
+      "algebra_deps": [
+        "Sierpinski3k",
+        "LucasTriad",
+        "S3",
+        "SU3",
+        "J3O",
+        "ThreeMoveClosure"
+      ],
+      "cli_entry": "TriadForge.verify",
+      "paper_ref": "CQE-paper-06",
+      "source": "production/packages/cqecmplx-forge/src/TriadForge/",
+      "keystone": "2^k rows = 3^k live cells; why Lucas is O(log N) and the triad recurs below",
+      "wolfram_arguments": "structural transport for problems 1/2/3 with honest epistemic status",
+      "receipt": "production/formal-papers/CQE-paper-06/triadic_keystone_receipt.json",
+      "verify_status": "10/10"
+    },
+    "GroundingForge": {
+      "type": "engine",
+      "role": "The grounding: the only outside inclusions are proven daily-use theorems (Lucas 1878 origin, idempotent AND-submask dual to OR); the only addition is the verified chart->J3(O) connection",
+      "algebra_deps": [
+        "Lucas1878",
+        "BooleDeMorgan",
+        "IdempotentDual",
+        "CharterT3"
+      ],
+      "cli_entry": "GroundingForge.verify",
+      "paper_ref": "CQE-paper-00",
+      "source": "production/packages/cqecmplx-forge/src/GroundingForge/",
+      "origin_theorem": "Lucas' theorem (1878) \u2014 idempotent AND-submask base dual to OR",
+      "the_only_addition": "chart->J3(O) isomorphism (T3), verified",
+      "receipt": "production/formal-papers/CQE-paper-00/established_grounding_receipt.json",
+      "verify_status": "10/10"
+    },
+    "QuarkFaceForge": {
+      "type": "engine",
+      "role": "Quark-face color transport literalized: exact SU(3) color structure on the chart (3 colors=triad, S3 Weyl, T4 closure, trace conservation, chiral doublet, J3 faces, confinement)",
+      "algebra_deps": [
+        "SU3",
+        "S3Weyl",
+        "J3O",
+        "ColorChirality",
+        "TraceConservation",
+        "Triad"
+      ],
+      "cli_entry": "QuarkFaceForge.verify",
+      "paper_ref": "CQE-paper-13",
+      "source": "production/packages/cqecmplx-forge/src/QuarkFaceForge/",
+      "literalization": "paper 13 tentative -> exact verified structural claim",
+      "honesty_boundary": "physical-quark identity held as transport (O10), not a physics proof",
+      "receipt": "production/formal-papers/CQE-paper-13/quark_face_transport_literalized_receipt.json",
+      "verify_status": "10/10"
+    },
+    "DoublingForge": {
+      "type": "engine",
+      "role": "The 120 open permutation routes = one E8 hemisphere; a single Cayley-Dickson doubling (antipodal conjugation) closes 120 -> 240 E8",
+      "algebra_deps": [
+        "E8",
+        "CayleyDickson",
+        "AntipodalConjugation",
+        "S5_120",
+        "BinaryIcosahedral2I",
+        "600cell",
+        "PhiFold"
+      ],
+      "cli_entry": "DoublingForge.verify",
+      "paper_ref": "CQE-paper-32",
+      "source": "production/packages/cqecmplx-forge/src/DoublingForge/",
+      "finding": "operator hypothesis verified: 120 = 5! = |2I| = 600-cell = E8 half; one CD doubling closes to 240",
+      "honesty_boundary": "cardinality + doubling closure exact; S5-vs-2I group correspondence open",
+      "receipt": "production/formal-papers/CQE-paper-32/p120_e8_cayley_dickson_doubling_receipt.json",
+      "verify_status": "10/10"
+    },
+    "FieldFormForge": {
+      "type": "engine",
+      "role": "Register the chart states as members of existing formal forms: (Z/2)^3/F2^3, AG(3,2), hypercube Q3, Boolean lattice B3, A2 hexagon, 24-cell/D4, 600-cell, [3,1,3] repetition code",
+      "algebra_deps": [
+        "Z2_3",
+        "F2_3",
+        "AG_3_2",
+        "HypercubeQ3",
+        "BooleanB3",
+        "A2RootSystem",
+        "24cell",
+        "600cell",
+        "RepetitionCode"
+      ],
+      "cli_entry": "FieldFormForge.verify",
+      "paper_ref": "CQE-paper-00",
+      "source": "production/packages/cqecmplx-forge/src/FieldFormForge/",
+      "directive": "expand into new fields by registering states as members of existing formal forms",
+      "receipt": "production/formal-papers/CQE-paper-00/field_form_membership_receipt.json",
+      "verify_status": "10/10"
+    },
+    "MassResidueForge": {
+      "type": "engine",
+      "role": "Mass-residue carrier literalized: mass = VOA weight (2 massless vacua + 6 massive excited), mass = bondedness, gap 5, residue = C AND NOT R, 2 vacua = internal VEV",
+      "algebra_deps": [
+        "VOAWeight",
+        "Bondedness",
+        "Z2q0_6q5",
+        "ColorS3",
+        "CorrectionResidue"
+      ],
+      "cli_entry": "MassResidueForge.verify",
+      "paper_ref": "CQE-paper-15",
+      "source": "production/packages/cqecmplx-forge/src/MassResidueForge/",
+      "tone_shift": "affirmative internal mass map; external measured-mass calibration named not claimed",
+      "receipt": "production/formal-papers/CQE-paper-15/mass_residue_literalized_receipt.json",
+      "verify_status": "10/10"
+    }
+  },
+  "products": {
+    "cqecmplx.r30": {
+      "tier": "core",
+      "category": "rule30_solver",
+      "role": "Observer-relative Rule 30 stopped-state solver with extended memory cache, oriented binary atlas, reverse library, hierarchical atlas addressing, enumerated request-tail codec, deployment-shaped verification (DTT/TDD/TTD)",
+      "algebra_deps": [
+        "Rule30",
+        "LCR",
+        "Chroma/Gluon",
+        "Idempotent_C",
+        "Rho_cycle",
+        "NormalForm_N_bar_K",
+        "Atlas_D_n",
+        "ReverseLibrary",
+        "HierarchicalAddressing",
+        "RequestTailCodec"
+      ],
+      "cli_entry": "cmplx_r30.cli:main",
+      "source": "production/packages/cqecmplx-forge/src/cqecmplx/r30/",
+      "namespace": "cqecmplx.r30",
+      "key_capabilities": {
+        "atlas": "Oriented binary atlas with 256 radius-1 truth tables, packed MSB-first random access",
+        "library": "Reverse library spine: manifest.json, recipes.json, address_recipe_ids.bin (O(1) lookup)",
+        "hierarchy": "Mixed-radix addressing: 1M * 4 * (1B * 8)^4, 50M = 10M * 5 with 3|2 Hamiltonian split",
+        "codec": "16-bit request tail, L=R plane annealing in at most 3 LCR transpositions",
+        "deployment_lane": "DTT | TDD | TTD triple-execution agreement verification",
+        "shell": "Rule 30 \u00b11 shell: -1 prerequisites \u2192 0 Rule 30 \u2192 +1 immediate transports (Niemeier, E8^3, Leech, Golay)",
+        "extended_memory": "Cache manifest, hydration boundary, million-bit fixture, billion-bit target"
+      },
+      "verify_command": "cqecmplx-verify (includes r30 checks)"
+    },
+    "cqecmplx.engines.analog_workbench": {
+      "tier": "core",
+      "category": "forge_product",
+      "role": "Analog Forge Workbook Kit simulator, receipt engine, and PDF workbench generator",
+      "algebra_deps": [
+        "WorkbookSchema",
+        "ReceiptChain",
+        "SimulationEngine",
+        "Operators",
+        "PDFReports",
+        "Kit"
+      ],
+      "cli_entry": "forgefactory_analog_workbench.cli:main",
+      "source": "production/packages/cqecmplx-forge/src/cqecmplx/engines/analog_workbench/",
+      "namespace": "cqecmplx.engines.analog_workbench",
+      "optional_deps": [
+        "reportlab>=4.0"
+      ],
+      "verify_command": "cqecmplx-verify (includes analog_workbench checks)"
+    },
+    "cqecmplx.entropy": {
+      "tier": "application",
+      "category": "rule30_application",
+      "role": "Quantum-grade cryptographic entropy without quantum hardware \u2014 Rule 30 based verifiable RNG",
+      "algebra_deps": [
+        "Rule30",
+        "EntropyExtraction",
+        "VerifiableRandomness"
+      ],
+      "source": "D:/CQE_CMPLX/historical_pastworks/product_entropy/",
+      "dependencies": [
+        "requests>=2.31.0",
+        "websocket-client>=1.7.0"
+      ],
+      "optional_dependencies": {
+        "api": [
+          "fastapi>=0.109.0",
+          "uvicorn[standard]>=0.27.0",
+          "websockets>=12.0",
+          "pydantic>=2.5.0"
+        ]
+      },
+      "verify_command": "pytest tests -v --cov=src"
+    },
+    "cqecmplx.security": {
+      "tier": "application",
+      "category": "security_monitor",
+      "role": "Sentinel \u2014 Zero-Trust Security Monitor with Mathematically Proven Anomaly Detection",
+      "algebra_deps": [
+        "AnomalyDetection",
+        "ZeroTrust",
+        "ProvenMonitoring"
+      ],
+      "source": "D:/CQE_CMPLX/historical_pastworks/product_sentinel/",
+      "dependencies": [
+        "fastapi>=0.109.0",
+        "uvicorn[standard]>=0.27.0",
+        "pydantic>=2.5.0",
+        "websockets>=12.0",
+        "prometheus-client>=0.19.0"
+      ],
+      "verify_command": "pytest tests -v"
+    },
+    "cqecmplx.workspace": {
+      "tier": "platform",
+      "category": "ai_workspace",
+      "role": "Full-stack AI workspace with LLM hosting, cookbook, email, calendar, RAG, TTS, image generation, deep research",
+      "algebra_deps": [
+        "LLMHosting",
+        "RAG",
+        "TTS",
+        "ImageGen",
+        "Cookbook",
+        "Email",
+        "Calendar",
+        "VectorMemory"
+      ],
+      "source": "D:/CQE_CMPLX/odysseus/",
+      "setup_script": "setup.py",
+      "verify_command": "setup.py && pytest tests -v"
+    },
+    "cqecmplx.partsfactory": {
+      "tier": "framework",
+      "category": "agent_framework",
+      "role": "CMPLX-PartsFactory \u2014 Unified agent ecosystem and service framework (source of lattice_forge PartsFactory branch)",
+      "algebra_deps": [
+        "AgentEcosystem",
+        "ServiceFramework",
+        "TemplateEngine"
+      ],
+      "source": "D:/CQE_CMPLX/CMPLX-PartsFactory-main/",
+      "dependencies": [
+        "numpy>=1.24.0",
+        "fastapi>=0.100.0",
+        "uvicorn>=0.23.0",
+        "httpx>=0.28.0",
+        "pydantic>=2.0.0",
+        "requests>=2.31.0",
+        "discord.py>=2.3.0",
+        "aiohttp>=3.8.0",
+        "psycopg2-binary>=2.9.0",
+        "redis>=5.0.0",
+        "duckdb>=0.10.0",
+        "jinja2>=3.0.0",
+        "pyyaml>=6.0"
+      ],
+      "verify_command": "pytest tests -v"
+    },
+    "cqecmplx.lattice.extended": {
+      "tier": "extension",
+      "category": "lattice_extraction",
+      "role": "Enterprise-Grade AI Orchestration with Geometric Intelligence \u2014 Lattice/E8/Leech, MCP, AI orchestration (extract lattice/E8/Leech from cmplx_monorepo)",
+      "algebra_deps": [
+        "E8Lattice",
+        "LeechLattice",
+        "MCP",
+        "Aletheia",
+        "Morphonic",
+        "MeritBlockchain",
+        "SnapCluster"
+      ],
+      "source": "D:/CQE_CMPLX/g/CMPLX/",
+      "dependencies": [
+        "numpy>=1.21.0",
+        "scipy>=1.7.0",
+        "pydantic>=2.0",
+        "pydantic-settings>=2.0",
+        "requests>=2.28.0",
+        "aiohttp>=3.8.0",
+        "pyyaml>=6.0",
+        "python-dotenv>=0.20.0",
+        "typing-extensions>=4.0.0"
+      ],
+      "verify_command": "python run_tests.py",
+      "extraction_targets": [
+        "E8 lattice ops",
+        "Leech lattice ops",
+        "MCP server/client",
+        "Aletheia",
+        "Morphonic",
+        "Merit blockchain",
+        "Snap cluster"
+      ]
+    }
+  },
+  "dependency_graph": {
+    "kernel": [],
+    "lattice_forge": [
+      "kernel"
+    ],
+    "engine_forges": [
+      "lattice_forge"
+    ],
+    "reforge_ring": [
+      "lattice_forge",
+      "engine_forges"
+    ],
+    "core_products": [
+      "lattice_forge",
+      "engine_forges"
+    ],
+    "applications": [
+      "core_products",
+      "reforge_ring"
+    ],
+    "frameworks": [
+      "engine_forges",
+      "reforge_ring"
+    ],
+    "extensions": [
+      "lattice_forge",
+      "engine_forges"
+    ]
+  },
+  "verification": {
+    "command": "cqecmplx-verify",
+    "kernel_verify": "python -m cqekernel verify",
+    "product_verifies": "all integrated into cqecmplx-verify"
+  },
+  "installation": {
+    "kernel_only": "pip install cqe-kernel",
+    "forge_ring_stdlib": "pip install cqecmplx-forge",
+    "forge_ring_full": "pip install cqecmplx-forge[predictors,reportlab]",
+    "products_editable": {
+      "entropy": "pip install -e D:/CQE_CMPLX/historical_pastworks/product_entropy",
+      "security": "pip install -e D:/CQE_CMPLX/historical_pastworks/product_sentinel",
+      "workspace": "cd D:/CQE_CMPLX/odysseus && python setup.py && pip install -r requirements.txt",
+      "partsfactory": "pip install -e D:/CQE_CMPLX/CMPLX-PartsFactory-main",
+      "lattice_extended": "pip install -e D:/CQE_CMPLX/g/CMPLX"
+    }
+  }
+}

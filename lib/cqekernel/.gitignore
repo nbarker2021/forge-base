@@ -1,0 +1,24 @@
+# cqekernel .gitignore
+# Exclude test artifacts and local workspace
+
+# Test artifacts
+_cqe_*_test/
+_cqe_*_test_*/
+*.pyc
+__pycache__/
+.pytest_cache/
+
+# Local workspace
+.cqe/
+*.jsonl
+
+# Distribution
+dist/
+build/
+*.egg-info/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo

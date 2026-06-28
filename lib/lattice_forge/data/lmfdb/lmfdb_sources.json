@@ -1,0 +1,168 @@
+{
+  "source": {
+    "title": "LMFDB - The L-functions and modular forms database",
+    "url": "https://www.lmfdb.org",
+    "api_url": "https://www.lmfdb.org/api/",
+    "api_notes": [
+      "Query values use type prefixes such as s, i, f, ls, li, lf, py.",
+      "Meta-parameters include _format, _fields, _sort, and _delim.",
+      "LMFDB documents a maximum of 100 results per list page and an overall API limit around 10000 results."
+    ]
+  },
+  "collections": {
+    "mf_newforms": {
+      "url": "https://www.lmfdb.org/api/mf_newforms/",
+      "role": "classical modular forms / q-expansion coefficient source lane",
+      "sample_query": "level=i1&weight=i12&_format=json&_fields=label,level,weight,dim",
+      "cmplx_use": "Anchor modular-form references before any McKay/Moonshine coefficient claims are promoted."
+    },
+    "mf_hecke_traces": {
+      "url": "https://www.lmfdb.org/api/mf_hecke_traces/",
+      "role": "Hecke trace data for modular-form comparison lanes",
+      "sample_query": "_format=json&_fields=label&_offset=0",
+      "cmplx_use": "Potential coefficient/trace comparison surface; use only with narrow queries."
+    },
+    "lfunc_lfunctions": {
+      "url": "https://www.lmfdb.org/api/lfunc_lfunctions/",
+      "role": "L-function metadata and analytic fingerprint lane",
+      "sample_query": "_format=json&_fields=label,degree,conductor&_offset=0",
+      "cmplx_use": "Fingerprint registry for future modular/automorphic closures."
+    },
+    "lat_lattices": {
+      "url": "https://www.lmfdb.org/api/lat_lattices/",
+      "role": "positive definite lattice database",
+      "sample_query": "dim=i24&_format=json&_fields=label,dim,det,level",
+      "cmplx_use": "Cross-check 24D lattice landing forms against external lattice records."
+    },
+    "gps_groups": {
+      "url": "https://www.lmfdb.org/api/gps_groups/",
+      "role": "abstract group metadata",
+      "sample_query": "_format=json&_fields=label,order,tex_name&_offset=0",
+      "cmplx_use": "Group identity/factorization reference for finite-group and Moonshine-adjacent claims."
+    },
+    "gps_conj_classes": {
+      "url": "https://www.lmfdb.org/api/gps_conj_classes/",
+      "role": "abstract-group conjugacy class data",
+      "sample_query": "_format=json&_fields=group,label,order,size&_offset=0",
+      "cmplx_use": "Conjugacy-class comparison lane; query only by known group when needed."
+    },
+    "hecke_orbits": {
+      "url": "https://www.lmfdb.org/api/hecke_orbits/",
+      "role": "Hecke orbit records",
+      "sample_query": "_format=json&_fields=label&_offset=0",
+      "cmplx_use": "Orbit-language bridge for modular forms and action tables."
+    }
+  },
+  "samples": {
+    "mf_newforms": {
+      "status": "ok",
+      "url": "https://www.lmfdb.org/api/mf_newforms/?level=i1&weight=i12&_format=json&_fields=label,level,weight,dim",
+      "table": "mf_newforms",
+      "result_count": 1,
+      "rec_id": "label",
+      "sample": [
+        {
+          "id": 0,
+          "label": "1.12.a.a",
+          "level": 1,
+          "weight": 12,
+          "dim": 1
+        }
+      ],
+      "next": "/api/mf_newforms/?level=i1&weight=i12&_format=json&_fields=label,level,weight,dim&_offset=1"
+    },
+    "mf_hecke_traces": {
+      "status": "error",
+      "url": "https://www.lmfdb.org/api/mf_hecke_traces/?_format=json&_fields=label&_offset=0",
+      "error": "HTTP Error 404: Not Found"
+    },
+    "lfunc_lfunctions": {
+      "status": "ok",
+      "url": "https://www.lmfdb.org/api/lfunc_lfunctions/?_format=json&_fields=label,degree,conductor&_offset=0",
+      "table": "lfunc_lfunctions",
+      "result_count": 100,
+      "rec_id": "Lhash",
+      "sample": [
+        {
+          "id": 1,
+          "label": "1-3-3.2-r1-0-0",
+          "degree": 1,
+          "conductor": 3
+        },
+        {
+          "id": 2,
+          "label": "1-2e2-4.3-r1-0-0",
+          "degree": 1,
+          "conductor": 4
+        },
+        {
+          "id": 3,
+          "label": "1-5-5.2-r1-0-0",
+          "degree": 1,
+          "conductor": 5
+        }
+      ],
+      "next": "/api/lfunc_lfunctions/?_format=json&_fields=label,degree,conductor&_offset=100"
+    },
+    "lat_lattices": {
+      "status": "ok",
+      "url": "https://www.lmfdb.org/api/lat_lattices/?dim=i24&_format=json&_fields=label,dim,det,level",
+      "table": "lat_lattices",
+      "result_count": 1,
+      "rec_id": "label",
+      "sample": [
+        {
+          "id": 39293,
+          "label": "24.1.1.24.1",
+          "dim": 24,
+          "det": 1,
+          "level": 1
+        }
+      ],
+      "next": "/api/lat_lattices/?dim=i24&_format=json&_fields=label,dim,det,level&_offset=1"
+    },
+    "gps_groups": {
+      "status": "ok",
+      "url": "https://www.lmfdb.org/api/gps_groups/?_format=json&_fields=label,order,tex_name&_offset=0",
+      "table": "gps_groups",
+      "result_count": 100,
+      "rec_id": "label",
+      "sample": [
+        {
+          "id": 318588,
+          "label": "1.1",
+          "order": 1,
+          "tex_name": "C_1"
+        },
+        {
+          "id": 142945,
+          "label": "2.1",
+          "order": 2,
+          "tex_name": "C_2"
+        },
+        {
+          "id": 147539,
+          "label": "3.1",
+          "order": 3,
+          "tex_name": "C_3"
+        }
+      ],
+      "next": "/api/gps_groups/?_format=json&_fields=label,order,tex_name&_offset=100"
+    },
+    "gps_conj_classes": {
+      "status": "error",
+      "url": "https://www.lmfdb.org/api/gps_conj_classes/?_format=json&_fields=group,label,order,size&_offset=0",
+      "error": "Expecting value: line 1 column 1 (char 0)"
+    },
+    "hecke_orbits": {
+      "status": "error",
+      "url": "https://www.lmfdb.org/api/hecke_orbits/?_format=json&_fields=label&_offset=0",
+      "error": "Expecting value: line 1 column 1 (char 0)"
+    }
+  },
+  "cmplx_scope": [
+    "Use LMFDB as a modular/lattice/group reference source.",
+    "Do not bulk mirror large collections.",
+    "Only promote a coefficient, trace, orbit, or L-function claim when the exact query and returned record are stored."
+  ]
+}

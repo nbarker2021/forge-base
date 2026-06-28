@@ -1,0 +1,47 @@
+{
+  "datasets": [
+    {
+      "id": "wolfram-rule30-center-million",
+      "title": "A Million Bits of the Center Column of the Rule 30 Cellular Automaton",
+      "resource_url": "https://datarepository.wolframcloud.com/resources/A-Million-Bits-of-the-Center-Column-of-the-Rule-30-Cellular-Automaton/",
+      "downloaded_files": [
+        {
+          "path": "D:\\PartsFactory\\CMPLX-R30\\DATA\\wolfram-rule30-center\\wolfram_rule30_center_1m.json",
+          "format": "json",
+          "sha256": "827dbc6fe8be189a6f4a99a9c04acae94ddca7d1f6be9a89fbfa815c8aa8136b",
+          "bytes": 2000008
+        },
+        {
+          "path": "D:\\PartsFactory\\CMPLX-R30\\DATA\\wolfram-rule30-center\\wolfram_rule30_center_1m.wl",
+          "format": "wolfram-language",
+          "sha256": "c07f23bcea568fd271835003093a30472b219e95085a482e21b3474529ff9c25",
+          "bytes": 3000000
+        }
+      ],
+      "bit_count": 1000000,
+      "zeros": 499232,
+      "ones": 500768,
+      "indexing": "0-based local accessor, bit n is center column at depth n",
+      "source_notes": [
+        "Wolfram Data Repository, 2017",
+        "Originator: Stephen Wolfram",
+        "Presented in A New Kind of Science page 871 graphic"
+      ]
+    },
+    {
+      "id": "wolfram-rule30-center-billion",
+      "title": "A Billion Bits of the Center Column of the Rule 30 Cellular Automaton",
+      "resource_url": "https://datarepository.wolframcloud.com/resources/A-Billion-Bits-of-the-Center-Column-of-the-Rule-30-Cellular-Automaton/",
+      "download_status": "registered_not_downloaded",
+      "bit_count": 1000000000,
+      "packed_bytes_expected": 125000000,
+      "packing": "Each byte gives 8 center-column values; highest-order bit is earliest.",
+      "source_notes": [
+        "Wolfram Data Repository, 2019",
+        "Contributor: Xiangdong Wen",
+        "Prepared by Wolfram Research"
+      ]
+    }
+  ],
+  "lab_rule": "Any N inside a registered dataset window can be treated as a sheet-size template and nth-bit oracle without rerunning Rule 30."
+}

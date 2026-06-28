@@ -1,0 +1,192 @@
+{
+  "source": {
+    "title": "The Unipotent Muffin Research Kitchen",
+    "url": "https://umrkportal.net/UMRK/UMRK.html",
+    "description": "UMRK is documented as a PostgreSQL database containing eight tables for simple complex Lie algebras, nilpotent orbits, Weyl representations, subsystems, Levi and pseudo-Levi data, real forms, and Weyl conjugacy classes."
+  },
+  "tables": {
+    "g_data": {
+      "field_count": 18,
+      "fields": [
+        "g",
+        "cartan_class",
+        "rank",
+        "ebase",
+        "fund_wgts",
+        "cartan_matrix",
+        "inv_cartan_matrix",
+        "pos_roots",
+        "highest_root",
+        "rho",
+        "exponents",
+        "coxeter_number",
+        "dual_root_system",
+        "connection_index",
+        "order_of_weyl_group",
+        "idx_of_coxeter_elt",
+        "idx_of_longest_elt",
+        "admissible_graphs"
+      ]
+    },
+    "orbit_data": {
+      "field_count": 21,
+      "fields": [
+        "id",
+        "g",
+        "orbit_idx",
+        "common_name",
+        "cbc_parameters",
+        "weighted_dynkin_diagram",
+        "springer_rep",
+        "dim",
+        "pi1",
+        "A",
+        "Abar",
+        "orbits_immed_above",
+        "orbits_immed_below",
+        "spaltenstein_dual_orbit",
+        "barbasch_vogan_dual_orbit",
+        "special_orbit_above",
+        "producing_levi",
+        "producing_psilevis",
+        "inducing_levis",
+        "special_yn",
+        "richardson_yn"
+      ]
+    },
+    "wrep_data": {
+      "field_count": 18,
+      "fields": [
+        "id",
+        "g",
+        "cw_idx",
+        "common_name",
+        "springer_parameters",
+        "orbit",
+        "local_system",
+        "dim",
+        "lowest_degree_of_fdp",
+        "fake_degree_poly_coeffs",
+        "generic_degree_poly_coeffs",
+        "dual_rep",
+        "special_rep_yn",
+        "orbit_rep_yn",
+        "macdonald_rep_yn",
+        "inducing_subsystems",
+        "irred_character",
+        "cell_id"
+      ]
+    },
+    "ss_data": {
+      "field_count": 20,
+      "fields": [
+        "id",
+        "g",
+        "ss_idx",
+        "ibase",
+        "ebase",
+        "positive_roots",
+        "cartan_type",
+        "dim",
+        "coxeter_conj_class",
+        "macdonald_rep",
+        "levi_idx",
+        "psilevi_idx",
+        "closed_subsystem_yn",
+        "distinguished_subsets",
+        "bc_g_orbits",
+        "admissible_diagrams",
+        "res_matrix",
+        "adjoint_rep",
+        "lie_type",
+        "split_base"
+      ]
+    },
+    "levi_data": {
+      "field_count": 14,
+      "fields": [
+        "id",
+        "g",
+        "levi_idx",
+        "ss_idx",
+        "ibase",
+        "ebase",
+        "dim",
+        "cartan_type",
+        "coxeter_conj_class",
+        "macdonald_rep",
+        "distinguished_subsets",
+        "bc_g_orbits",
+        "richardson_orbit",
+        "positive_roots"
+      ]
+    },
+    "psilevi_data": {
+      "field_count": 13,
+      "fields": [
+        "id",
+        "g",
+        "levi_idx",
+        "ss_idx",
+        "ibase",
+        "ebase",
+        "dim",
+        "cartan_type",
+        "coxeter_conj_class",
+        "macdonald_rep",
+        "distinguished_subsets",
+        "bc_g_orbits",
+        "dj"
+      ]
+    },
+    "realform_data": {
+      "field_count": 24,
+      "fields": [
+        "id",
+        "rf_idx",
+        "g",
+        "g_R",
+        "K",
+        "K_R",
+        "Krep_p",
+        "dim_p",
+        "krep_k",
+        "dim_k",
+        "vogan_diagram",
+        "satake_diagram",
+        "rel_root_sys",
+        "real_rank",
+        "inner_class",
+        "compact_yn",
+        "split_yn",
+        "quasisplit_yn",
+        "equalrank_yn",
+        "complex_yn",
+        "hermitian_symmetric_yn",
+        "str_orth_seqs",
+        "seqs_of_prim_Ktypes",
+        "res_matrix"
+      ]
+    },
+    "wcc_data": {
+      "field_count": 10,
+      "fields": [
+        "id",
+        "g",
+        "cw_idx",
+        "class_rep",
+        "length",
+        "admissible_diagrams",
+        "reflection_word_length",
+        "class_size",
+        "elt_order",
+        "characteristic_poly_coeffs"
+      ]
+    }
+  },
+  "cmplx_use": [
+    "Hydrate Atlas orbit rows with orbit_idx, closure adjacency, Springer reps, and Levi induction data.",
+    "Bind Weyl conjugacy class data to CMPLX-R30 fingerprint obligations.",
+    "Use realform_data only as a later runtime/control-plane extension, not as current proof closure."
+  ]
+}

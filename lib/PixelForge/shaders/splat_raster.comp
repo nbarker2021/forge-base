@@ -1,0 +1,70 @@
+#version 450
+// PixelForge splat_raster.comp — GPU mirror of PixelForge.splat.rasterize_splats'
+// inner per-pixel loop. Tile assignment and farthest-first ordering are
+// computed once on CPU (PixelForge.splat.project_splats/bin_splats — the
+// same backend-agnostic functions the CPU path uses) and handed to this
+// shader as a CSR tile->splat-index buffer, so this stage only replaces the
+// part that is actually GPU work: per-pixel Gaussian-falloff alpha blend.
+// One invocation per pixel (not per splat) so each thread serially walks
+// its own tile's splat list in the given order — no cross-thread write
+// races, and the same accumulation order as the CPU reference, so any
+// CPU/GPU divergence is attributable to float32-vs-float64 rounding, not a
+// reordering of the blend.
+
+layout(local_size_x = 8, local_size_y = 8) in;
+
+struct Splat {
+    vec4 posDepthRadius;   // cx, cy, depth, radius_px
+    vec4 colorOpacity;     // r, g, b (0..1), opacity (0..1)
+};
+
+layout(std430, binding = 0) readonly buffer SplatBuf      { Splat splats[]; };
+layout(std430, binding = 1) readonly buffer TileOffsetBuf { uint tileOffsets[]; };
+layout(std430, binding = 2) readonly buffer TileIndexBuf  { uint tileIndices[]; };
+layout(std430, binding = 3) writeonly buffer PixelBuf     { vec4 pixels[]; };
+
+layout(push_constant) uniform PC {
+    int width;
+    int height;
+    int tileSize;
+    int tilesX;
+    vec4 background;       // rgb 0..1, alpha unused
+} pc;
+
+const float FALLOFF_SIGMA_CUTOFF = 3.0;
+const float MIN_WEIGHT = 1.0 / 1024.0;
+
+void main() {
+    ivec2 px = ivec2(gl_GlobalInvocationID.xy);
+    if (px.x >= pc.width || px.y >= pc.height) {
+        return;
+    }
+
+    int tx = px.x / pc.tileSize;
+    int ty = px.y / pc.tileSize;
+    int tileIndex = ty * pc.tilesX + tx;
+
+    uint start = tileOffsets[tileIndex];
+    uint end = tileOffsets[tileIndex + 1];
+
+    vec3 color = pc.background.rgb;
+
+    for (uint k = start; k < end; ++k) {
+        Splat s = splats[tileIndices[k]];
+        float dx = (float(px.x) + 0.5) - s.posDepthRadius.x;
+        float dy = (float(px.y) + 0.5) - s.posDepthRadius.y;
+        float d2 = dx * dx + dy * dy;
+        float radius = s.posDepthRadius.w;
+        float r2 = radius * radius;
+        if (d2 > r2 * FALLOFF_SIGMA_CUTOFF * FALLOFF_SIGMA_CUTOFF) {
+            continue;
+        }
+        float weight = s.colorOpacity.w * exp(-0.5 * d2 / max(1e-6, r2));
+        if (weight <= MIN_WEIGHT) {
+            continue;
+        }
+        color = mix(color, s.colorOpacity.rgb, weight);
+    }
+
+    pixels[uint(px.y * pc.width + px.x)] = vec4(color, 1.0);
+}

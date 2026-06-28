@@ -1,0 +1,38 @@
+{
+  "name": "entropy-core",
+  "version": "1.0.0",
+  "description": "Quantum-grade cryptographic entropy without quantum hardware. Every byte mathematically proven non-periodic.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "lint": "eslint src/",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "entropy",
+    "cryptography",
+    "random",
+    "rng",
+    "rule-30",
+    "cellular-automaton",
+    "verifiable",
+    "voa",
+    "non-periodic"
+  ],
+  "author": "EntropyCore Team",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/entropycore/entropy-core.git"
+  }
+}
