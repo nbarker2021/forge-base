@@ -208,6 +208,9 @@ AXIOM_VERIFIERS = {
     "verify_s3_action": lambda: __import__("lattice_forge.recursive_closure_engine", fromlist=["verify_s3_action"]).verify_s3_action(),
     "verify_recursive_closure": lambda: __import__("lattice_forge.recursive_closure_engine", fromlist=["verify_recursive_closure"]).verify_recursive_closure(),
     "verify_recursive_light_cone_closure": lambda: __import__("lattice_forge.recursive_closure_engine", fromlist=["verify_recursive_light_cone_closure"]).verify_recursive_light_cone_closure(),
+    "verify_unified_energy_transport": lambda: __import__("lattice_forge.energy_quantum", fromlist=["verify_unified_energy_transport"]).verify_unified_energy_transport(),
+    "verify_tarpit_mass_formula": lambda: __import__("lattice_forge.energy_quantum", fromlist=["verify_tarpit_mass_formula"]).verify_tarpit_mass_formula(),
+    "verify_coupling_transport": lambda: __import__("lattice_forge.energy_quantum", fromlist=["verify_coupling_transport"]).verify_coupling_transport(),
 }
 
 
