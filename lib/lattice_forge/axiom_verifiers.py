@@ -200,6 +200,8 @@ AXIOM_VERIFIERS = {
     "calibrate_games": lambda: __import__("lattice_forge.knight_ca", fromlist=["calibrate_games"]).calibrate_games(),
     "verify_spectre_correction": lambda: __import__("lattice_forge.boundary_complex", fromlist=["verify_spectre_correction"]).verify_spectre_correction(),
     "verify_chain_complex": lambda: __import__("lattice_forge.boundary_complex", fromlist=["verify_chain_complex"]).verify_chain_complex(),
+    "verify_z4_chiral": lambda: __import__("lattice_forge.chiral_doublet", fromlist=["verify_z4_chiral"]).verify_z4_chiral(),
+    "verify_chiral_doublet": lambda: __import__("lattice_forge.chiral_doublet", fromlist=["verify_chiral_doublet"]).verify_chiral_doublet(),
 }
 
 
