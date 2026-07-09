@@ -1,7 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass, field, asdict
 from typing import Any, Dict, List
-import json, time, uuid, hashlib
+import json, time, hashlib
 
 VALID_COLORS = {"red","green","blue","white","black","grey","clear","neon","unknown"}
 VALID_FOLLOWUPS = {"proof","obligation","guess","new_item","unresolved","receipt","pass"}
@@ -139,7 +139,17 @@ class Receipt:
 
     @classmethod
     def new(cls, source_text: str, followup: str, blocks: List[LCRBlock], **kw: Any) -> "Receipt":
-        return cls("rcpt_" + uuid.uuid4().hex[:12], source_text=source_text, followup=followup, blocks=blocks, **kw)
+        rid = stable_id(
+            "rcpt",
+            {
+                "source_text": source_text,
+                "followup": followup,
+                "blocks": [
+                    b.to_dict() if hasattr(b, "to_dict") else b for b in blocks
+                ],
+            },
+        )
+        return cls(rid, source_text=source_text, followup=followup, blocks=blocks, **kw)
 
     def validate(self) -> None:
         if self.followup not in VALID_FOLLOWUPS:

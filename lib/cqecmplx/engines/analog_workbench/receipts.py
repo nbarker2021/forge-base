@@ -23,7 +23,7 @@ class Receipt:
     closure_formula: str = ""
     idempotence_status: str = "untested"
     open_obligations: List[str] = field(default_factory=list)
-    timestamp: str = field(default_factory=lambda: datetime.utcnow().isoformat() + "Z")
+    timestamp: str = ""                  # audit only; set by receipt_from_action
 
     def validate(self) -> List[str]:
         errors: List[str] = []
@@ -60,4 +60,5 @@ def receipt_from_action(action_id: str, observed_action: str, colors_used: List[
         closure_formula="read(action)->state; read(state)->same_class" if followup == "proof" else "open_route->obligation",
         idempotence_status="passed" if followup == "proof" else "deferred",
         open_obligations=[] if followup == "proof" else ["resolve missing gradient or binding route"],
+        timestamp=datetime.utcnow().isoformat() + "Z",
     )

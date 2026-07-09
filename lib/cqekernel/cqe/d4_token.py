@@ -11,7 +11,6 @@ when it isn't, this stub is the local authority.
 
 from __future__ import annotations
 
-import uuid
 from dataclasses import dataclass
 from typing import Any, Dict, Optional
 

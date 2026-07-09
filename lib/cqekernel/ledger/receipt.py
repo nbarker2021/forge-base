@@ -11,7 +11,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-import uuid
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import Any, Dict, Optional
@@ -25,6 +24,25 @@ def _utcnow_iso() -> str:
 
 def _stable_hash(payload: bytes) -> str:
     return hashlib.sha256(payload).hexdigest()
+
+
+def _receipt_id(
+    event_type: str,
+    input_hash: str,
+    output_hash: str,
+    request_id: Optional[str] = None,
+) -> str:
+    body = json.dumps(
+        {
+            "event_type": event_type,
+            "input_hash": input_hash,
+            "output_hash": output_hash,
+            "request_id": request_id,
+        },
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    return _stable_hash(body)[:32]
 
 
 @dataclass
@@ -78,7 +96,7 @@ class Receipt:
         request_id: Optional[str] = None,
     ) -> "Receipt":
         return cls(
-            receipt_id=receipt_id or str(uuid.uuid4()),
+            receipt_id=receipt_id or _receipt_id(event_type, input_hash, output_hash, request_id),
             event_type=event_type,
             input_hash=input_hash,
             output_hash=output_hash,

@@ -27,7 +27,6 @@ different resolution.
 import hashlib
 import math
 import time
-import uuid
 from dataclasses import dataclass, field
 from typing import Any, Dict, FrozenSet, List, Optional, Set, Tuple
 
@@ -92,7 +91,7 @@ class Stax:
     resonance: str = ""                 # SHA256-derived resonance signature
 
     # Graph
-    ts: float = field(default_factory=time.time)
+    created_at: float = 0.0                # audit only; set by make_stax()
 
     # Optional user metadata
     metadata: Dict[str, Any] = field(default_factory=dict)
@@ -188,6 +187,7 @@ def make_stax(
         agrm_position = pos,
         resonance     = resonance,
         metadata      = metadata or {},
+        created_at    = time.time(),
     )
 
 

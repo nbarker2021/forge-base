@@ -358,9 +358,20 @@ class RuntimeDB:
         """Append a receipt to the runtime DB."""
         if not self.conn: return
         import hashlib
-        receipt_hash = hashlib.sha256(
-            f"{tool_name}-{atom_id}-{operation}-{time.time()}".encode()
-        ).hexdigest()[:32]
+        body = json.dumps(
+            {
+                "tool": tool_name,
+                "atom": atom_id,
+                "operation": operation,
+                "operator": operator,
+                "delta_phi": delta_phi,
+                "metadata": metadata or {},
+            },
+            sort_keys=True,
+            separators=(",", ":"),
+            default=str,
+        )
+        receipt_hash = hashlib.sha256(body.encode()).hexdigest()[:32]
         self.conn.execute(
             """INSERT OR REPLACE INTO receipts
             (receipt_hash, atom_id, parent_hash, operation, operator, delta_phi, metadata, created_at)

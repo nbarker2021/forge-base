@@ -21,9 +21,10 @@ from __future__ import annotations
 import hashlib
 import math
 import time
-import uuid
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Tuple
+
+from PixelForge.stable_ids import surface_id_for
 
 # ─── Lookup tables (import-time, read-only) ───────────────────────────────────
 
@@ -82,7 +83,7 @@ class Surface:
         "mouse": True, "touch": False, "stylus": False, "pressure": False,
     })
     metadata: Dict[str, Any] = field(default_factory=dict)
-    ts: float = field(default_factory=time.time)
+    created_at: float = 0.0                # audit only; set by SurfaceRegistry
 
     def __post_init__(self):
         # orientation always derives from the dimensions, however constructed
@@ -151,18 +152,20 @@ class SurfaceRegistry:
                  kind: str = "screen", surface_id: Optional[str] = None,
                  input_caps: Optional[Dict[str, bool]] = None,
                  metadata: Optional[Dict[str, Any]] = None) -> Surface:
-        sid = surface_id or f"srf-{uuid.uuid4().hex[:10]}"
+        caps = input_caps or {"mouse": True, "touch": False,
+                              "stylus": False, "pressure": False}
+        sid = surface_id or surface_id_for(width, height, dpr, kind, caps)
         s = Surface(
             surface_id=sid, width=int(width), height=int(height), dpr=float(dpr),
             orientation="portrait" if height > width else "landscape",
             kind=kind,
-            input_caps=input_caps or {"mouse": True, "touch": False,
-                                      "stylus": False, "pressure": False},
+            input_caps=caps,
             metadata=metadata or {},
+            created_at=time.time(),
         )
         self._surfaces[sid] = s
         self._history.append({"op": "register", "surface": s.descriptor(),
-                              "fingerprint": s.fingerprint(), "ts": s.ts})
+                              "fingerprint": s.fingerprint(), "created_at": s.created_at})
         return s
 
     def resize(self, surface_id: str, width: int, height: int,
@@ -174,9 +177,9 @@ class SurfaceRegistry:
         if dpr is not None:
             s.dpr = float(dpr)
         s.orientation = "portrait" if s.height > s.width else "landscape"
-        s.ts = time.time()
+        s.created_at = time.time()
         self._history.append({"op": "resize", "surface": s.descriptor(),
-                              "fingerprint": s.fingerprint(), "ts": s.ts})
+                              "fingerprint": s.fingerprint(), "created_at": s.created_at})
         return s
 
     def get(self, surface_id: str) -> Optional[Surface]:

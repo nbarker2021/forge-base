@@ -44,6 +44,21 @@ DECAY_EVERY: int = 16         # one decay tick per N global events
 DECAY_DRAIN: float = 1.0      # bosonic occupancy drained per tick (kappa-weighted)
 
 
+def _default_run_id(vault: CrystalVault, engine) -> str:
+    """Deterministic run identity from vault path + engine type + receipt head."""
+    vault_key = str(getattr(vault, "path", vault))
+    head = "0" * 64
+    receipt = getattr(engine, "receipt", None)
+    if receipt is not None and hasattr(receipt, "head"):
+        head = receipt.head() or head
+    seed = json.dumps(
+        {"vault": vault_key, "engine": type(engine).__name__, "chain_head": head},
+        sort_keys=True,
+        separators=(",", ":"),
+    )
+    return "run-" + hashlib.sha256(seed.encode()).hexdigest()[:10]
+
+
 class RunLifecycle:
     """One live run over a ChromaForgeEngine, bound to a CrystalVault backend.
 
@@ -59,7 +74,7 @@ class RunLifecycle:
                  decay_every: int = DECAY_EVERY):
         self.engine = engine
         self.vault = vault
-        self.run_id = run_id or f"run-{hashlib.sha256(str(time.time()).encode()).hexdigest()[:10]}"
+        self.run_id = run_id or _default_run_id(vault, engine)
         self.promote_at = promote_at
         self.decay_every = decay_every
 

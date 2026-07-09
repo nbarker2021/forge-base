@@ -14,7 +14,6 @@ Module-level singleton `ledger` available for single-context use.
 import hashlib
 import json
 import time
-import uuid
 from typing import Dict, List, Optional
 
 # ─── Lookup tables (import-time, read-only) ────────────────────────────────────
@@ -66,18 +65,26 @@ class ReceiptLedger:
         if receipt_type not in _RECEIPT_TYPE_SET:
             raise ValueError(f"receipt_type must be one of {RECEIPT_TYPES}")
 
-        receipt_id = uuid.uuid4().hex[:16]
-        ts = time.time()
         parent = parent_hash if parent_hash else self._head
 
         # The dyadic gluon pair: two hashes = two circles of the oloid
         input_hash = hashlib.sha256(input_data.encode()).hexdigest()[:16]
         output_hash = hashlib.sha256(output_data.encode()).hexdigest()[:16]
 
-        # Chain hash: SHA256(parent:operation:atom:ts)
-        receipt_hash = hashlib.sha256(
-            f"{parent}:{operation}:{atom_id}:{ts}".encode()
-        ).hexdigest()
+        body = json.dumps({
+            "parent": parent,
+            "operation": operation,
+            "atom_id": atom_id,
+            "receipt_type": receipt_type,
+            "agent_id": agent_id,
+            "input_hash": input_hash,
+            "output_hash": output_hash,
+            "delta_phi": round(delta_phi, 8),
+            "epoch": epoch,
+        }, sort_keys=True, separators=(",", ":"))
+        receipt_hash = hashlib.sha256(body.encode()).hexdigest()
+        receipt_id = receipt_hash[:16]
+        ts = time.time()
 
         receipt: Dict = {
             "receipt_id":   receipt_id,

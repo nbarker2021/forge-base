@@ -18,9 +18,10 @@ Design: MMDBEngine is a class. Module-level singleton `engine` available.
 import hashlib
 import math
 import time
-import uuid
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional, Set, Tuple
+
+from .stable_ids import mmdb_crystal_id
 
 # ─── Lookup tables (import-time, read-only) ────────────────────────────────────
 
@@ -64,9 +65,16 @@ class MMDBEngine:
         metadata: Dict = None,
     ) -> Dict:
         """Store a crystal. Returns {crystal_id, content_hash, snap_labels}."""
-        cid = uuid.uuid4().hex
-        content_hash = hashlib.sha256(content.encode()).hexdigest()[:16]
         labels = list(set(snap_labels or []))
+        cid = mmdb_crystal_id(content, labels, mdhg_address)
+        content_hash = hashlib.sha256(content.encode()).hexdigest()[:16]
+        if cid in self._crystals:
+            return {
+                "crystal_id": cid,
+                "content_hash": content_hash,
+                "snap_labels": labels,
+                "exists": True,
+            }
         coords = list(e8_coords or _EMPTY_E8)
 
         record: Dict = {

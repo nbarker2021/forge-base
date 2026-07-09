@@ -19,11 +19,11 @@ from __future__ import annotations
 import json
 import math
 import time
-import uuid
 from dataclasses import dataclass, field, asdict
 from typing import Any, Dict, List, Optional, Tuple
 
 from .schema import get_connection
+from .stable_ids import brain_row_id
 
 PHI = (1 + math.sqrt(5)) / 2
 COUPLING = math.log(PHI) / 16  # kappa = ln(phi)/16, same constant as crystal.py
@@ -150,7 +150,10 @@ class TMNBrain:
 
     def __post_init__(self):
         if not self.brain_id:
-            self.brain_id = f"brain-{uuid.uuid4().hex[:8]}"
+            if self.agent_id:
+                self.brain_id = brain_row_id(self.agent_id)
+            else:
+                raise ValueError("brain_id or agent_id required for stable brain identity")
         if not self.experts:
             self.experts = [ExpertNode(direction=i, domain=EXPERT_DOMAINS[i]) for i in range(8)]
         if not self.gate:
@@ -317,7 +320,8 @@ def load_brain(brain_id: str, db_path=None) -> Optional[TMNBrain]:
 
 def register_brain(agent_id: str, dims: int = 24, db_path=None) -> TMNBrain:
     """Create a fresh learner brain for an agent and persist it."""
-    brain = TMNBrain(agent_id=agent_id, dims=dims)
+    row_id = brain_row_id(agent_id)
+    brain = TMNBrain(agent_id=agent_id, brain_id=row_id, dims=dims)
     save_brain(brain, db_path)
     return brain
 

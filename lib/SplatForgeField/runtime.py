@@ -128,9 +128,11 @@ class FieldRuntime:
                 "child_field": child_field.summary(), "receipt_hash": receipt["receipt_head"]}
 
     def _fork_crystal(self, parent_id: str, op: str, payload: Dict[str, Any]) -> str:
+        from SplatForgeField.stable_ids import field_child_name
+
         parent_nodes = _crystal.get_nodes(parent_id, self.db_path)
         child = _crystal.create_crystal(
-            name=f"{parent_id}+{op}:{int(time.time()*1000)}",
+            name=field_child_name(parent_id, op, payload),
             crystal_type="field_child", owner="field_runtime", db_path=self.db_path)
         # copy parent atoms verbatim (the child is a branch, not a fresh datum)
         for n in parent_nodes:

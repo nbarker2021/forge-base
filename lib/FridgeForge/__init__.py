@@ -68,7 +68,7 @@ class FridgeForgeEngine:
                 if not any(m["key"] == k for m in matched):
                     matched.append({"key": k, "via": src})
         rec = {
-            "scan_id": f"scan-{img_hash or hashlib.sha256(str(time.time()).encode()).hexdigest()[:10]}",
+            "scan_id": f"scan-{img_hash or hashlib.sha256((caption + filename).encode()).hexdigest()[:10]}",
             "image_hash": img_hash,
             "image_bytes_len": len(image_bytes),
             "matched": matched,

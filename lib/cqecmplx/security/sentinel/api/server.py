@@ -267,7 +267,9 @@ async def monitor(request: MonitorRequest) -> dict[str, Any]:
     # Build fingerprint from current observations
     fp = SyndromeFingerprint.from_observations(
         detector._observations, source=request.source
-    ) if detector._observations else SyndromeFingerprint(source=request.source)
+    ) if detector._observations else SyndromeFingerprint(
+        source=request.source, created_at=time.time()
+    )
     voa = _state.voa_checker.check(fp)
 
     # If we got an alert, broadcast to WebSocket clients

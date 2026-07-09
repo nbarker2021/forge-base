@@ -16,11 +16,11 @@ the rejected/complement side of the split.
 
 from __future__ import annotations
 
-import uuid
 from dataclasses import dataclass
 from typing import Any, Dict, List, Tuple
 
 from ..core.status import AdmissionClass
+from ..stable_ids import admission_id_for
 
 
 # ---------------------------------------------------------------------------
@@ -198,7 +198,9 @@ def _gate(
       * ``unknown``      iff left/right disagree
       * ``deferred``     otherwise
     """
-    candidate_id = str(uuid.uuid4())
+    candidate_id = admission_id_for(
+        left_state, center_state, right_state, center_threshold
+    )
     left = {"value": left_state, "role": "boundary"}
     right = {"value": right_state, "role": "boundary"}
     center = {"value": center_state, "role": "carrier"}

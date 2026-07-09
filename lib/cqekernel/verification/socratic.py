@@ -18,11 +18,11 @@ The questions are deterministic. They are emitted as a list of
 
 from __future__ import annotations
 
-import uuid
 from dataclasses import dataclass
 from typing import Any, Dict, List
 
 from ..core.status import EvidenceStatus
+from ..stable_ids import socratic_question_id
 
 
 @dataclass
@@ -62,7 +62,7 @@ def wrap(target_id: str) -> List[SocraticQuestion]:
     for purpose, q, rat, _ in [(c[0], c[1], c[2], c[3]) for c in _CANONICAL]:
         out.append(
             SocraticQuestion(
-                question_id=str(uuid.uuid4()),
+                question_id=socratic_question_id(target_id, purpose, q),
                 target_id=target_id,
                 question=q,
                 purpose=purpose,

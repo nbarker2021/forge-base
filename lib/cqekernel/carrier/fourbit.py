@@ -11,9 +11,10 @@ from __future__ import annotations
 import base64
 import hashlib
 import json
-import uuid
 from dataclasses import dataclass, field
 from typing import Any, Dict, List
+
+from ..stable_ids import carrier_id_for
 
 
 def _nibbles_from_bytes(data: bytes) -> List[str]:
@@ -98,7 +99,7 @@ def from_bytes(source_hash: str, data: bytes) -> FourBitCarrier:
         separators=(",", ":"),
     ).encode("utf-8")
     return FourBitCarrier(
-        carrier_id=str(uuid.uuid4()),
+        carrier_id=carrier_id_for(_stable_hash(canonical), source_hash),
         source_hash=source_hash,
         nibbles=nibbles,
         nibble_count=len(nibbles),

@@ -15,11 +15,11 @@ binding supplies that receipt. It only marks the apertures.
 
 from __future__ import annotations
 
-import uuid
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Tuple
 
 from ..carrier.lcr import LocalGluon
+from ..stable_ids import aperture_id_for
 
 
 APERTURE_KINDS: List[str] = [
@@ -79,7 +79,7 @@ def _aperture(
     requires_tail: bool = False,
 ) -> BoundaryAperture:
     return BoundaryAperture(
-        aperture_id=str(uuid.uuid4()),
+        aperture_id=aperture_id_for(kind, position, local_state),
         kind=kind,
         position=position,
         local_state=local_state,

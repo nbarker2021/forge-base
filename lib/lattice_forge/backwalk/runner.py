@@ -7,7 +7,6 @@ import json
 import os
 import sys
 import time
-import uuid
 from dataclasses import asdict
 from pathlib import Path
 from typing import Any
@@ -26,6 +25,11 @@ from lattice_forge.backwalk.weyl_bond_dual import (
     WeylBondBatchSpec,
     iter_batch_specs,
     materialize_weyl_bond_batch,
+)
+from lattice_forge.backwalk.stable_ids import (
+    backwalk_run_id,
+    lattice_space_run_id,
+    weyl_run_id,
 )
 from lattice_forge.backwalk.weyl_bond_quadrant import concatenate_quadrant_trees
 from lattice_forge.paths import resolve_work_db
@@ -104,7 +108,6 @@ def run_backwalk(argv: list[str] | None = None) -> int:
     baseline_path = args.baseline_report or work_db.parent / "baseline_report.json"
 
     seed_verify_before = SeedStore.packaged().verify()
-    run_id = str(uuid.uuid4())
     config = {
         "phase": args.phase,
         "terminals": args.terminals,
@@ -112,6 +115,7 @@ def run_backwalk(argv: list[str] | None = None) -> int:
         "include_exceptionals": args.include_exceptionals,
         "resume": args.resume,
     }
+    run_id = backwalk_run_id(args.phase, str(work_db), config)
 
     t0 = time.perf_counter()
     errors: list[str] = []
@@ -215,7 +219,6 @@ def run_weyl_orchestrate(argv: list[str] | None = None) -> int:
     report_path = work_db.parent / "weyl_bond_orchestrator_report.json"
 
     seed_before = SeedStore.packaged().verify()
-    run_id = str(uuid.uuid4())
 
     if args.quadrant is not None and args.all_quadrants:
         print("Use either --quadrant N or --all-quadrants, not both", file=sys.stderr)
@@ -235,6 +238,7 @@ def run_weyl_orchestrate(argv: list[str] | None = None) -> int:
     for q in quadrant_plan:
         specs.extend(list(iter_batch_specs(include_read_out=True, quadrant=q)))
     specs = _sort_weyl_specs(specs)
+    run_id = weyl_run_id(str(work_db), quadrant_plan, args.concat_only)
 
     if args.dry_run:
         print(
@@ -371,7 +375,7 @@ def run_lattice_space(argv: list[str] | None = None) -> int:
         return 0
 
     seed_before = SeedStore.packaged().verify()
-    run_id = str(uuid.uuid4())
+    run_id = lattice_space_run_id(str(work_db), args.resume)
 
     with WorkStore(work_db) as store:
         result = run_lattice_space_exhaustion(

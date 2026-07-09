@@ -10,7 +10,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-import uuid
 from dataclasses import field
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional, Tuple, Union
@@ -224,7 +223,6 @@ class Kernel:
             policy_dict.update(extra_policy)
 
         req = ObservedRequest(
-            request_id=str(uuid.uuid4()),
             raw_text=raw,
             source_type=source_type,
             timestamp=datetime.now(timezone.utc).isoformat(),

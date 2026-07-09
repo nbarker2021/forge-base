@@ -19,11 +19,11 @@ from __future__ import annotations
 import hashlib
 import json
 import time
-import uuid
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 from PixelForge.projection import project_state, entropy as _entropy
+from PixelForge.stable_ids import stream_id_for
 
 
 @dataclass
@@ -60,7 +60,7 @@ class FrameStream:
     def __init__(self, fps: float = 30.0, projection: str = "standard",
                  parity_rule: str = "free",     # free | alternate | hold
                  entropy_slack: float = 0.0):
-        self.stream_id = f"fs-{uuid.uuid4().hex[:10]}"
+        self.stream_id = stream_id_for(fps, projection, parity_rule, entropy_slack)
         self.fps = fps
         self.projection = projection
         self.parity_rule = parity_rule

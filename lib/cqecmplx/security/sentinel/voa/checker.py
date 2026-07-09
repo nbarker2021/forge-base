@@ -276,6 +276,7 @@ class VOAChecker:
                 7: 0,  # other deep invariant handled differently
             },
             source="raw_check",
+            created_at=time.time(),
         )
         # Fill in realistically: assume invariant_count is split between 0 and 7
         fp.syndrome_counts[0] = invariant_count // 2

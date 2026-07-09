@@ -22,7 +22,7 @@ from __future__ import annotations
 
 import dataclasses
 import hashlib
-import uuid
+import json
 from datetime import datetime, timezone
 from typing import Dict, List, Tuple
 
@@ -60,11 +60,21 @@ class SplatReceiptLedger:
         output_paths: List[str] = None,
         benchmark_metrics: Dict = None,
     ) -> Dict:
-        receipt_id = uuid.uuid4().hex[:16]
-        ts = _utcnow_iso()
         parent = self._head
+        receipt_id = hashlib.sha256(
+            f"{parent}:{adapter_id}:{input_hash}:{output_hash}".encode()
+        ).hexdigest()[:16]
+        ts = _utcnow_iso()
         receipt_hash = hashlib.sha256(
-            f"{parent}:{adapter_id}:{input_hash}:{output_hash}:{ts}".encode()
+            json.dumps({
+                "parent": parent,
+                "adapter_id": adapter_id,
+                "input_hash": input_hash,
+                "output_hash": output_hash,
+                "backend": backend,
+                "status": status,
+                "evidence_class": evidence_class,
+            }, sort_keys=True, separators=(",", ":")).encode()
         ).hexdigest()
         receipt = {
             "receipt_id": receipt_id,

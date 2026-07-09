@@ -8,10 +8,11 @@ configured).
 
 from __future__ import annotations
 
-import uuid
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
+
+from ..stable_ids import event_id_for
 
 
 # Canonical event types. Adding a new event? Add it here AND to the
@@ -54,7 +55,7 @@ class Event:
 
     event_type: str
     payload: Dict[str, Any] = field(default_factory=dict)
-    event_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    event_id: str = ""
     timestamp: str = field(default_factory=_utcnow_iso)
     request_id: Optional[str] = None
     input_hash: Optional[str] = None
@@ -66,6 +67,14 @@ class Event:
             raise KernelPolicyError(
                 f"unknown event_type {self.event_type!r}; "
                 f"must be one of {EVENT_TYPES}"
+            )
+        if not self.event_id:
+            self.event_id = event_id_for(
+                self.event_type,
+                self.payload,
+                self.request_id,
+                self.input_hash,
+                self.output_hash,
             )
 
     def to_dict(self) -> Dict[str, Any]:
@@ -84,7 +93,7 @@ class Event:
         return cls(
             event_type=data["event_type"],
             payload=dict(data.get("payload", {})),
-            event_id=data.get("event_id") or str(uuid.uuid4()),
+            event_id=data.get("event_id") or "",
             timestamp=data.get("timestamp") or _utcnow_iso(),
             request_id=data.get("request_id"),
             input_hash=data.get("input_hash"),

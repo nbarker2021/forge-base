@@ -18,9 +18,10 @@ Design: SNAPEngine is a class. Module-level singleton `engine` + helpers availab
 import hashlib
 import json
 import time
-import uuid
 from dataclasses import dataclass, field, asdict
 from typing import Any, Callable, Dict, List, Optional, Set, Tuple
+
+from .stable_ids import snap_record_id
 
 # ─── Lookup tables (import-time, read-only) ────────────────────────────────────
 
@@ -64,20 +65,35 @@ class Body:
 
 @dataclass
 class SNAPRecord:
-    record_id: str = field(default_factory=lambda: uuid.uuid4().hex[:12])
+    record_id: str = ""
     kind: str = "generic"
-    ts: float = field(default_factory=time.time)
+    ts: float = 0.0
     members: List[Body] = field(default_factory=list)
     predicates: List[Predicate] = field(default_factory=list)
     delta_u: float = 0.0
     polarity_conflict: float = 0.0
     payload: Dict[str, Any] = field(default_factory=dict)
 
+    def __post_init__(self) -> None:
+        if not self.record_id:
+            self.record_id = snap_record_id(
+                self.kind,
+                [b.id for b in self.members],
+                [p.name for p in self.predicates],
+                self.delta_u,
+                self.payload,
+            )
+        if not self.ts:
+            self.ts = time.time()
+
     def hash(self) -> str:
-        return hashlib.sha256(
-            json.dumps({"id": self.record_id, "kind": self.kind, "ts": self.ts},
-                       sort_keys=True).encode()
-        ).hexdigest()[:16]
+        return snap_record_id(
+            self.kind,
+            [b.id for b in self.members],
+            [p.name for p in self.predicates],
+            self.delta_u,
+            self.payload,
+        )
 
 
 @dataclass

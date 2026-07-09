@@ -10,11 +10,12 @@ from __future__ import annotations
 
 import hashlib
 import json
-import uuid
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional
+
+from ..stable_ids import snapshot_id_for
 
 
 def _stable_hash(payload: bytes) -> str:
@@ -77,7 +78,9 @@ def make_snapshot(
     parent_snapshot: Optional[str] = None,
 ) -> Snapshot:
     return Snapshot(
-        snapshot_id=str(uuid.uuid4()),
+        snapshot_id=snapshot_id_for(
+            request_id, source_hash, carrier_hash, ribbon_hash, ledger_hash, parent_snapshot
+        ),
         request_id=request_id,
         source_hash=source_hash,
         carrier_hash=carrier_hash,

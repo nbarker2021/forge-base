@@ -95,6 +95,11 @@ class AppState:
 _state = AppState()
 
 
+def _entropy_session_id(kind: str, payload: dict) -> str:
+  body = json.dumps(payload, sort_keys=True, separators=(",", ":"), default=str)
+  return f"ent-{kind}-" + hashlib.sha256(body.encode()).hexdigest()[:16]
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Lifespan
 # ─────────────────────────────────────────────────────────────────────────────
@@ -234,7 +239,9 @@ async def secure_random(req: SecureRandomRequest):
     - VOA partition proof Z(q) = 2q^0 + 6q^5
     """
     t0 = time.time()
-    session_id = secrets.token_hex(8)
+    session_id = _entropy_session_id(
+        "sr", {"size_bytes": req.size_bytes, "include_proof": req.include_proof}
+    )
 
     try:
         engine = _state.get_engine(session_id)
@@ -262,7 +269,14 @@ async def batch_gen(req: BatchGenRequest):
     Set include_proofs=False for maximum throughput.
     """
     t0 = time.time()
-    session_id = secrets.token_hex(8)
+    session_id = _entropy_session_id(
+        "batch",
+        {
+            "block_size": req.block_size,
+            "block_count": req.block_count,
+            "include_proofs": req.include_proofs,
+        },
+    )
     blocks: list[SecureRandomResponse] = []
 
     try:
@@ -423,7 +437,9 @@ async def verifiable_stream(websocket: WebSocket):
         total_bytes = config_data.get("total_bytes", 65536)
         block_size = config_data.get("block_size", 4096)
 
-        session_id = secrets.token_hex(8)
+        session_id = _entropy_session_id(
+            "stream", {"total_bytes": total_bytes, "block_size": block_size}
+        )
         engine = _state.get_engine(session_id)
 
         bytes_sent = 0

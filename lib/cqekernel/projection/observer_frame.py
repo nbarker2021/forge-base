@@ -19,9 +19,10 @@ obligations and can be revisited on replay.
 
 from __future__ import annotations
 
-import uuid
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional
+
+from ..stable_ids import obligation_prefix_for
 
 
 FRAME_NAMES: List[str] = [
@@ -75,7 +76,9 @@ def four_frames(
     other three are ``latent`` and carry obligation ids."""
     if selected_index not in (0, 1, 2, 3):
         raise ValueError("selected_index must be 0..3")
-    prefix = obligation_id_prefix or str(uuid.uuid4())
+    prefix = obligation_id_prefix or obligation_prefix_for(
+        source_carrier_hash, selected_index
+    )
     frames: List[ObserverFrame] = []
     for i, name in enumerate(FRAME_NAMES):
         is_selected = (i == selected_index)

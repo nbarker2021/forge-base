@@ -10,11 +10,12 @@ carrier.
 from __future__ import annotations
 
 import hashlib
-import uuid
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from enum import Enum
 from typing import Any, Dict, Optional
+
+from ..stable_ids import request_id_for
 
 
 class RequestMode(str, Enum):
@@ -50,7 +51,7 @@ class ObservedRequest:
     source_type: str = "text"
     observer_id: Optional[str] = None
     mode: RequestMode = RequestMode.READ_ONLY
-    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    request_id: str = ""
     timestamp: str = field(default_factory=_utcnow_iso)
     policy: Dict[str, Any] = field(default_factory=dict)
     raw_bytes: bytes = field(default=b"")
@@ -66,6 +67,13 @@ class ObservedRequest:
         else:
             self.raw_bytes = self.raw_text.encode("utf-8")
             self.raw_hash = _stable_hash(self.raw_bytes)
+        if not self.request_id:
+            self.request_id = request_id_for(
+                self.raw_hash,
+                self.mode.value,
+                self.source_type,
+                self.observer_id,
+            )
 
     def with_mode(self, mode: RequestMode) -> "ObservedRequest":
         """Return a new request with a different mode (immutable update)."""
@@ -99,7 +107,7 @@ class ObservedRequest:
             source_type=data.get("source_type", "text"),
             observer_id=data.get("observer_id"),
             mode=RequestMode(data.get("mode", "READ_ONLY")),
-            request_id=data.get("request_id") or str(uuid.uuid4()),
+            request_id=data.get("request_id") or "",
             timestamp=data.get("timestamp") or _utcnow_iso(),
             policy=dict(data.get("policy", {})),
             metadata=dict(data.get("metadata", {})),

@@ -24,9 +24,10 @@ import hashlib
 import json
 import math
 import time
-import uuid
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Tuple
+
+from PixelForge.stable_ids import stroke_id_for
 
 # ─── Lookup tables (import-time, read-only) ───────────────────────────────────
 
@@ -62,7 +63,7 @@ class Stroke:
     color: str = "#e8eaed"
     width_logical: float = 2.5 / 1080.0    # brush width in logical units
     target: Optional[str] = None           # e.g. a cell date this ink belongs to
-    ts: float = field(default_factory=time.time)
+    created_at: float = 0.0                # audit only; set by InkEngine.begin()
 
     # ── features ─────────────────────────────────────────────────────────────
     def length(self) -> float:
@@ -155,10 +156,17 @@ class InkEngine:
     # raw samples arrive in PHYSICAL pixels; caller passes the Surface for mapping
     def begin(self, surface, kind: str = "pen", color: str = "#e8eaed",
               target: Optional[str] = None) -> str:
-        sid = f"ink-{uuid.uuid4().hex[:10]}"
-        self._open[sid] = Stroke(stroke_id=sid, surface_id=surface.surface_id,
-                                 kind=kind if kind in POINTER_KINDS else "mouse",
-                                 color=color, target=target)
+        sid = stroke_id_for(
+            surface.surface_id, kind, color, target, len(self._strokes) + len(self._open)
+        )
+        self._open[sid] = Stroke(
+            stroke_id=sid,
+            surface_id=surface.surface_id,
+            kind=kind if kind in POINTER_KINDS else "mouse",
+            color=color,
+            target=target,
+            created_at=time.time(),
+        )
         return sid
 
     def add(self, stroke_id: str, surface, px: float, py: float,

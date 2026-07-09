@@ -16,7 +16,6 @@ import asyncio
 import hashlib
 import json
 import time
-import uuid
 from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
@@ -379,19 +378,16 @@ the VOA partition law, and emits mathematically-proven alerts.
         severity: AlertSeverity,
     ) -> Alert:
         """Create a fully documented alert."""
-        alert_id = f"SNTL-{uuid.uuid4().hex[:16].upper()}"
-
-        # Build proof hash
-        proof_data = {
+        proof_body = {
             "voa": voa.to_dict(),
             "chart": chart,
             "fingerprint": fp.to_dict(),
-            "timestamp": time.time(),
             "source": self.source,
         }
         proof_hash = hashlib.sha256(
-            json.dumps(proof_data, sort_keys=True, separators=(",", ":")).encode()
+            json.dumps(proof_body, sort_keys=True, separators=(",", ":")).encode()
         ).hexdigest()[:32]
+        alert_id = f"SNTL-{proof_hash[:16].upper()}"
 
         # Recommended action
         action_map = {

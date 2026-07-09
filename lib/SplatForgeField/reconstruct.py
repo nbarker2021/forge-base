@@ -299,15 +299,16 @@ class ReconstructForge:
         mean_residual = sum(residuals) / len(residuals) if residuals else 0.0
         passed = max_residual <= self.tolerance
 
-        ts = time.time()
         body = json.dumps({
             "field_id": field.field_id,
             "crystal_id": field.crystal_id,
             "max_residual": max_residual,
+            "mean_residual": mean_residual,
             "passed": passed,
             "layout_hashes": layout_hashes,
             "prev_hash": prev_hash,
-            "ts": ts,
+            "tolerance": self.tolerance,
+            "atom_count": len(atom_results),
         }, sort_keys=True, separators=(",", ":"))
         receipt_hash = hashlib.sha256(body.encode()).hexdigest()
         self._last_receipt_hash = receipt_hash
@@ -324,7 +325,7 @@ class ReconstructForge:
             view_layout_hashes=layout_hashes,
             receipt_hash=receipt_hash,
             prev_hash=prev_hash,
-            timestamp=ts,
+            timestamp=time.time(),
         )
 
     def verify_lossless_field_round_trip(

@@ -18,9 +18,10 @@ from __future__ import annotations
 
 import hashlib
 import json
-import uuid
 from dataclasses import dataclass
 from typing import Any, Dict
+
+from ..stable_ids import cform_id_for, placement_id_for
 
 from .lcr import LocalGluon
 
@@ -86,7 +87,7 @@ def cform_from_gluon(gluon: LocalGluon, source_carrier_hash: str) -> CForm:
         separators=(",", ":"),
     ).encode("utf-8")
     return CForm(
-        cform_id=str(uuid.uuid4()),
+        cform_id=cform_id_for(_stable_hash(body), gluon.index, source_carrier_hash),
         source_carrier_hash=source_carrier_hash,
         index=gluon.index,
         value=gluon.gluon,
@@ -171,7 +172,9 @@ def place(gluon: LocalGluon, source_request_id: str) -> TriadicPlacement:
     right = {"value": gluon.right, "role": "right", "index": gluon.index}
     center = {"value": gluon.gluon, "role": "center", "index": gluon.index}
     return TriadicPlacement(
-        placement_id=str(uuid.uuid4()),
+        placement_id=placement_id_for(
+            source_request_id, left, center, right, "natural"
+        ),
         source_request_id=source_request_id,
         left=left,
         center=center,
@@ -191,7 +194,13 @@ def place(gluon: LocalGluon, source_request_id: str) -> TriadicPlacement:
 def swap_lr(placement: TriadicPlacement) -> TriadicPlacement:
     """Return a new placement with L and R swapped (C preserved)."""
     new = TriadicPlacement(
-        placement_id=str(uuid.uuid4()),
+        placement_id=placement_id_for(
+            placement.source_request_id,
+            dict(placement.right),
+            dict(placement.center),
+            dict(placement.left),
+            "swapped",
+        ),
         source_request_id=placement.source_request_id,
         left=dict(placement.right),
         right=dict(placement.left),

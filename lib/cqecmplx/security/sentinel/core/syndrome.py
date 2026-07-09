@@ -212,7 +212,9 @@ class ChartStateMachine:
         source_idx = ChartState.all_states().index(source)
         target_idx = ChartState.all_states().index(target)
         triad_idx = compute_syndrome_id(triad) if triad else 0
-        trans_id = (source_idx << 60) | (target_idx << 56) | (triad_idx << 53) | int(time.time() * 1e6)
+        trans_id = (source_idx << 60) | (target_idx << 56) | (triad_idx << 53) | (
+            len(self.transition_log) & 0x1FFFFFFFFFFFFF
+        )
 
         self.transition_log.append({
             "timestamp": time.time(),
@@ -292,15 +294,15 @@ class SyndromeFingerprint:
     syndrome_counts: dict[int, int] = field(default_factory=lambda: {i: 0 for i in range(8)})
     # Chart state transition history
     chart_machine: ChartStateMachine = field(default_factory=ChartStateMachine)
-    # When the fingerprint was created
-    timestamp: float = field(default_factory=time.time)
+    # When the fingerprint was created (audit column — set at construction)
+    created_at: float = 0.0
     # Source label (e.g. "baseline", "production_web", "db_cluster")
     source: str = ""
 
     @classmethod
     def from_observations(cls, observations: list[tuple[int, int, int]], source: str = "") -> "SyndromeFingerprint":
         """Build a fingerprint from a list of observed triads."""
-        fp = cls(source=source)
+        fp = cls(source=source, created_at=time.time())
         for triad in observations:
             idx = compute_syndrome_id(triad)
             fp.syndrome_counts[idx] += 1
@@ -341,7 +343,8 @@ class SyndromeFingerprint:
         total = self.total_observations
         return {
             "source": self.source,
-            "timestamp": self.timestamp,
+            "created_at": self.created_at,
+            "timestamp": self.created_at,
             "total_observations": total,
             "syndrome_counts": dict(self.syndrome_counts),
             "invariant_count": self.invariant_count,

@@ -18,8 +18,9 @@ import json
 import math
 import threading
 import time
-import uuid
 from typing import Any, Dict, List, Optional, Tuple
+
+from .stable_ids import mdhg_session_id
 
 # ─── Lookup tables (import-time, read-only) ────────────────────────────────────
 
@@ -154,8 +155,17 @@ class MDHGEngine:
     # ── Session lifecycle ──────────────────────────────────────────────────────
 
     def create_session(self, name: Optional[str] = None,
-                       max_depth: int = 9) -> Dict:
-        session_id = uuid.uuid4().hex[:12]
+                       max_depth: int = 9,
+                       seed_content: str = "") -> Dict:
+        session_id = mdhg_session_id(name, seed_content)
+        if session_id in self._sessions:
+            existing = self._sessions[session_id]
+            return {
+                "session_id": session_id,
+                "name": existing["name"],
+                "ttl": self.session_ttl,
+                "exists": True,
+            }
         session = {
             "session_id":  session_id,
             "name":        name or f"mdhg-{session_id}",

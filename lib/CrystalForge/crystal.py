@@ -20,12 +20,12 @@ import hashlib
 import json
 import math
 import time
-import uuid
 from dataclasses import dataclass, field, asdict
 from enum import Enum
 from typing import Any, Dict, List, Optional
 
 from .schema import get_connection
+from .stable_ids import crystal_id_for_name, node_id_for
 
 PHI = (1 + math.sqrt(5)) / 2
 COUPLING = math.log(PHI) / 16  # kappa, same constant used throughout this corpus
@@ -206,7 +206,10 @@ class Crystal:
 
     def __post_init__(self):
         if not self.crystal_id:
-            self.crystal_id = str(uuid.uuid4())[:12]
+            if self.name:
+                self.crystal_id = crystal_id_for_name(self.name)
+            else:
+                raise ValueError("crystal_id or name required for stable crystal identity")
         if not self.receipt_chain:
             self.receipt_chain = hashlib.sha256(f"crystal:{self.crystal_id}".encode()).hexdigest()[:32]
         if not self.created_at:
@@ -231,7 +234,10 @@ class E8Node:
 
     def __post_init__(self):
         if not self.node_id:
-            self.node_id = f"node-{uuid.uuid4().hex[:8]}"
+            if self.crystal_id and self.content:
+                self.node_id = node_id_for(self.crystal_id, self.content, self.snap_labels)
+            else:
+                raise ValueError("node_id required, or crystal_id+content for stable derivation")
         if not self.mass:
             self.mass = len(self.snap_labels) * COUPLING
         if not self.created_at:
@@ -305,9 +311,12 @@ def create_crystal(name: str, crystal_type: str = "knowledge",
         n = math.sqrt(sum(c * c for c in e8_seed)) or 1.0
         e8_seed = [c / n * PHI for c in e8_seed]
     levels = DEFAULT_FABRIC[:level_count] if level_count <= 10 else DEFAULT_FABRIC
-    crystal = Crystal(name=name, crystal_type=crystal_type, e8_root=e8_seed,
-                       meaning_levels=MEANING_LEVELS[:meaning_depth],
-                       level_config=[asdict(l) for l in levels], owner=owner)
+    cid = crystal_id_for_name(name)
+    crystal = Crystal(
+        crystal_id=cid, name=name, crystal_type=crystal_type, e8_root=e8_seed,
+        meaning_levels=MEANING_LEVELS[:meaning_depth],
+        level_config=[asdict(l) for l in levels], owner=owner,
+    )
     _save_crystal(crystal, db_path)
     return crystal
 
@@ -321,13 +330,17 @@ def add_node(crystal_id: str, content: str, content_type: str = "atom",
     levels = [LevelConfig(**l) for l in crystal.level_config] if crystal.level_config else ATOM_LEVELS
     mdhg = assign_address(content=content, e8_coords=e8_coords or crystal.e8_root,
                            entry_type=content_type, labels=labels, levels=levels)
-    node = E8Node(crystal_id=crystal_id, content=content, content_type=content_type,
-                  e8_coords=e8_coords or crystal.e8_root, snap_labels=labels or [],
-                  mdhg_address=mdhg, mass=len(labels or []) * COUPLING)
+    lab = labels or []
+    nid = node_id_for(crystal_id, content, lab)
+    node = E8Node(
+        node_id=nid, crystal_id=crystal_id, content=content, content_type=content_type,
+        e8_coords=e8_coords or crystal.e8_root, snap_labels=lab,
+        mdhg_address=mdhg, mass=len(lab) * COUPLING,
+    )
     crystal.node_count += 1
     crystal.total_mass += node.mass
     crystal.receipt_chain = hashlib.sha256(
-        f"{crystal.receipt_chain}:node:{node.node_id}:{time.time()}".encode()).hexdigest()[:32]
+        f"{crystal.receipt_chain}:node:{node.node_id}".encode()).hexdigest()[:32]
     _save_node(node, db_path)
     _save_crystal(crystal, db_path)
     return node

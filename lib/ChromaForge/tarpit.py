@@ -17,10 +17,16 @@ lives in import-time lookup tables.
 import hashlib
 import math
 import time
-import uuid
 from dataclasses import dataclass, field, asdict
 from enum import Enum
 from typing import Any, Dict, List, Optional, Tuple
+
+from .stable_ids import (
+    ecology_receipt_id,
+    grain_id_for,
+    tarpit_session_id,
+    wall_id_for,
+)
 
 # ─── Lookup tables (import-time, read-only) ────────────────────────────────────
 
@@ -275,7 +281,7 @@ class GlyphGrain:
 
     def __post_init__(self):
         if not self.grain_id:
-            self.grain_id = f"gr-{uuid.uuid4().hex[:8]}"
+            self.grain_id = grain_id_for(self.glyph, self.e8_coords, self.position)
         if self.mass == 0.0 and self.e8_coords:
             self.mass = math.sqrt(sum(c * c for c in self.e8_coords))
 
@@ -358,7 +364,7 @@ class Wall:
 
     def __post_init__(self):
         if not self.wall_id:
-            self.wall_id = f"wall-{uuid.uuid4().hex[:8]}"
+            self.wall_id = wall_id_for(self.wall_type, self.content, self.grains)
         if not self.timestamp:
             self.timestamp = time.time()
 
@@ -388,7 +394,13 @@ def jot_execute(bit_string: str, tape: TarPitTape,
                 if sin_t > epsilon:
                     composite_e8 = [(a + b) / 2 for a, b in
                                     zip(current.e8_coords, neighbor.e8_coords)]
+                    gid = grain_id_for(
+                        f"({current.glyph}·{neighbor.glyph})",
+                        composite_e8,
+                        tape.pointer,
+                    )
                     composite = GlyphGrain(
+                        grain_id=gid,
                         glyph=f"({current.glyph}·{neighbor.glyph})",
                         e8_coords=composite_e8,
                         mass=math.sqrt(current.mass * neighbor.mass) * sin_t,
@@ -407,11 +419,13 @@ def jot_execute(bit_string: str, tape: TarPitTape,
             tape.move_right()
 
         elif bit == "1":
-            # NEST: lambda grain — E8 coords from coupling sines lookup table
             idx = i % 1024
+            coords = [_COUPLING_SINES[idx]] * 8
+            gid = grain_id_for(f"λ{i}", coords, tape.pointer)
             new_grain = GlyphGrain(
+                grain_id=gid,
                 glyph=f"λ{i}",
-                e8_coords=[_COUPLING_SINES[idx]] * 8,
+                e8_coords=coords,
             )
             tape.move_right()
             tape.set_cell(new_grain)
@@ -462,7 +476,12 @@ def ecology_step(tape: TarPitTape) -> Dict:
                 del tape.cells[pos]
 
     mass_after = sum(g.mass for g in tape.cells.values())
+    survivor_ids = [g.grain_id for g in tape.cells.values()]
+    eco_id = ecology_receipt_id(
+        survivor_ids, sorted(absorbed_ids), mass_before, mass_after,
+    )
     return {
+        "ecology_receipt_id": eco_id,
         "absorptions":        len(absorbed_ids),
         "survivors":          len(tape.cells),
         "mass_before":        round(mass_before, 6),
@@ -489,11 +508,11 @@ class TarPitEngine:
 
     def execute(self, content: str) -> Dict:
         """Full pipeline: E6 → Jot → seed tape → Jot execute → ecology → torus."""
-        session_id = f"sess-{uuid.uuid4().hex[:8]}"
         t0 = time.time()
 
         tokens = e6_encode(content[:500])
         sig = e6_signature(tokens)
+        session_id = tarpit_session_id(content, sig)
         jot = e6_to_jot(tokens[:100])
 
         # Seed tape with word grains
