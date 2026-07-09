@@ -205,6 +205,9 @@ AXIOM_VERIFIERS = {
     "verify_triality_operator": lambda: __import__("lattice_forge.triality", fromlist=["verify_triality_operator"]).verify_triality_operator(),
     "verify_niemeier_paths": lambda: __import__("lattice_forge.triality", fromlist=["verify_niemeier_paths"]).verify_niemeier_paths(),
     "verify_three_projections": lambda: __import__("lattice_forge.energy_transport", fromlist=["verify_three_projections"]).verify_three_projections(),
+    "verify_s3_action": lambda: __import__("lattice_forge.recursive_closure_engine", fromlist=["verify_s3_action"]).verify_s3_action(),
+    "verify_recursive_closure": lambda: __import__("lattice_forge.recursive_closure_engine", fromlist=["verify_recursive_closure"]).verify_recursive_closure(),
+    "verify_recursive_light_cone_closure": lambda: __import__("lattice_forge.recursive_closure_engine", fromlist=["verify_recursive_light_cone_closure"]).verify_recursive_light_cone_closure(),
 }
 
 
