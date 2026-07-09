@@ -197,6 +197,7 @@ AXIOM_VERIFIERS = {
     "verify_mckay_matrix_bootstrap": verify_mckay_matrix_bootstrap,
     "calibrate_units": calibrate_units,
     "calibrate_ckm": calibrate_ckm,
+    "calibrate_games": lambda: __import__("lattice_forge.knight_ca", fromlist=["calibrate_games"]).calibrate_games(),
 }
 
 
