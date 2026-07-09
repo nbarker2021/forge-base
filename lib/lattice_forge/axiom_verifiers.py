@@ -202,6 +202,8 @@ AXIOM_VERIFIERS = {
     "verify_chain_complex": lambda: __import__("lattice_forge.boundary_complex", fromlist=["verify_chain_complex"]).verify_chain_complex(),
     "verify_z4_chiral": lambda: __import__("lattice_forge.chiral_doublet", fromlist=["verify_z4_chiral"]).verify_z4_chiral(),
     "verify_chiral_doublet": lambda: __import__("lattice_forge.chiral_doublet", fromlist=["verify_chiral_doublet"]).verify_chiral_doublet(),
+    "verify_triality_operator": lambda: __import__("lattice_forge.triality", fromlist=["verify_triality_operator"]).verify_triality_operator(),
+    "verify_niemeier_paths": lambda: __import__("lattice_forge.triality", fromlist=["verify_niemeier_paths"]).verify_niemeier_paths(),
 }
 
 
