@@ -198,6 +198,8 @@ AXIOM_VERIFIERS = {
     "calibrate_units": calibrate_units,
     "calibrate_ckm": calibrate_ckm,
     "calibrate_games": lambda: __import__("lattice_forge.knight_ca", fromlist=["calibrate_games"]).calibrate_games(),
+    "verify_spectre_correction": lambda: __import__("lattice_forge.boundary_complex", fromlist=["verify_spectre_correction"]).verify_spectre_correction(),
+    "verify_chain_complex": lambda: __import__("lattice_forge.boundary_complex", fromlist=["verify_chain_complex"]).verify_chain_complex(),
 }
 
 
