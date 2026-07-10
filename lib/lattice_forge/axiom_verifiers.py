@@ -219,6 +219,7 @@ AXIOM_VERIFIERS = {
     "verify_recursive_sevenfold_closure": lambda: __import__("lattice_forge.triality", fromlist=["verify_recursive_sevenfold_closure"]).verify_recursive_sevenfold_closure(),
     "verify_grand_ribbon_preconditions": lambda: __import__("lattice_forge.meta_corpus", fromlist=["verify_grand_ribbon_preconditions"]).verify_grand_ribbon_preconditions(),
     "verify_lcr_sector_decomposition": lambda: __import__("lattice_forge.unification", fromlist=["verify_lcr_sector_decomposition"]).verify_lcr_sector_decomposition(),
+    "verify_spectre_tiling": lambda: __import__("lattice_forge.spectre_tiling", fromlist=["verify_spectre_tiling"]).verify_spectre_tiling(),
 }
 
 
