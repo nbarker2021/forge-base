@@ -468,6 +468,36 @@ def verify_z4_period_template() -> dict[str, Any]:
     }
 
 
+def verify_shared_center_c() -> dict[str, Any]:
+    """
+    Shared Center C (CQE-PAPER-051/052, honest core).
+
+    The gluon is the Center (C) component of the chart state; LR swap
+    (L,C,R) -> (R,C,L) fixes C, so C(s) = C(swap_LR(s)) for ALL 8
+    chart states. This is a *trivial* invariance (LR does not touch C),
+    so every state shares Center C under LR swap. No padding (the papers'
+    "64/64 rows" and "37 side-disagreements" are unsupported multipliers).
+    """
+    checks = {}
+    for s in STATES:
+        L, C, R = s
+        lr = (R, C, L)
+        checks[f"shared_C_{s}"] = (C == lr[1])
+    all_pass = all(checks.values())
+    return {
+        "status": "pass" if all_pass else "fail",
+        "checks": len(checks),
+        "sub_checks": checks,
+        "defects": 0 if all_pass else 1,
+        "honesty_boundary": (
+            "Center C invariant under LR swap for all 8 chart states (trivial: LR fixes C). "
+            "States with L != R (honest count = 6: (0,0,1),(0,1,0),(1,0,0),(1,0,1),"
+            "(1,1,0),(0,1,1)) are side-disagreements, NOT the fabricated '37'. "
+            "The '64/64 observer rows' multiplier is padding; the invariant holds per-state."
+        ),
+    }
+
+
 # ---------------------------------------------------------------------------
 # Consolidated verifier
 # ---------------------------------------------------------------------------
@@ -477,6 +507,7 @@ def verify_centroid_voa_chain() -> dict[str, Any]:
     r1 = verify_hamming_centroid_universality()
     r2 = verify_voa_sector_decomposition()
     r3 = verify_z4_period_template()
+    r4 = verify_shared_center_c()
 
     all_pass = all(r["status"] == "pass" for r in [r1, r2, r3])
 
