@@ -217,6 +217,7 @@ AXIOM_VERIFIERS = {
     "verify_shared_center_c": lambda: __import__("lattice_forge.centroid_voa", fromlist=["verify_shared_center_c"]).verify_shared_center_c(),
     "verify_observer_frame_selection": lambda: __import__("lattice_forge.observer_frame", fromlist=["verify_observer_frame_selection"]).verify_observer_frame_selection(),
     "verify_recursive_sevenfold_closure": lambda: __import__("lattice_forge.triality", fromlist=["verify_recursive_sevenfold_closure"]).verify_recursive_sevenfold_closure(),
+    "verify_grand_ribbon_preconditions": lambda: __import__("lattice_forge.meta_corpus", fromlist=["verify_grand_ribbon_preconditions"]).verify_grand_ribbon_preconditions(),
 }
 
 
