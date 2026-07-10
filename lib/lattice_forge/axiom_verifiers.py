@@ -216,6 +216,7 @@ AXIOM_VERIFIERS = {
     "verify_knight_register_calibration": lambda: __import__("lattice_forge.tarpit_ecology", fromlist=["verify_knight_register_calibration"]).verify_knight_register_calibration(),
     "verify_shared_center_c": lambda: __import__("lattice_forge.centroid_voa", fromlist=["verify_shared_center_c"]).verify_shared_center_c(),
     "verify_observer_frame_selection": lambda: __import__("lattice_forge.observer_frame", fromlist=["verify_observer_frame_selection"]).verify_observer_frame_selection(),
+    "verify_recursive_sevenfold_closure": lambda: __import__("lattice_forge.triality", fromlist=["verify_recursive_sevenfold_closure"]).verify_recursive_sevenfold_closure(),
 }
 
 

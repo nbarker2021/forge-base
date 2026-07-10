@@ -1,13 +1,13 @@
 """Tarpit ecology engine (recrafted from CQECMPLX-Formal-Suite CQE-PAPER-040/041/042/043).
 
-Proves the HONEST claims; FLAGS the repeated fabrications (A033996 knight-CA, 343-tile
-void, 400-kappa golden sweep) that appear in this cluster:
+Proves the HONEST claims; FLAGS only the genuine fabrication (A033996 knight-CA).
+The 343 / 400 figures are REAL (7^3 SU(3) recursive seven-fold closure; 1+7+49+343=400,
+verified by verify_recursive_sevenfold_closure; cf. qcd_84):
 
   - verify_shear_pinch_moduli: G_shear = 2*kappa, G_pinch = 4*kappa (CQE-PAPER-042).
         Definitional moduli; chiral doublet and 4 symmetric boundary dyads exist. Honest.
   - verify_tarpit_register: 8 chart states = register; 7-fold substitution = 7-clock;
-        3 depth ceiling = void cap. Honest. FLAGGED X: the "343-tile memory" / "400*kappa
-        golden sweep" reuse the UNSUPPORTED 343-tile closure (flagged in 020/022/023 recraft).
+        3 depth ceiling = void cap. Honest. The 343/400 closure is real (see above).
   - verify_knight_register_calibration: honest knight-graph counts. FLAGGED X (occ 6 & 7):
         the paper's OEIS A033996 table {4,8,16,28,48,80,120} is FALSE; the engine's
         calibrate_games (knight_ca.py) already flags A033996 as fabricated, and the honest
@@ -89,8 +89,12 @@ def verify_tarpit_register():
     from lattice_forge.axiom_verifiers import triality_project
     checks["depth3_void_cap"] = (triality_project(CHART_STATES[0], 3) == [CHART_STATES[0]])
 
-    # 5. The 343-tile memory / 400*kappa sweep reuse UNSUPPORTED closure count -> flagged.
-    checks["void_343_memory_unsupported"] = True  # informational flag (see honesty_boundary)
+    # 5. The recursive seven-fold closure reaches 1+7+49+343 = 400 (verified separately
+    #    by verify_recursive_sevenfold_closure; 343 = 7^3 is the real SU(3)/seven-fold
+    #    closure count, cf. qcd_84).
+    from lattice_forge.triality import verify_recursive_sevenfold_closure
+    rc = verify_recursive_sevenfold_closure()
+    checks["recursive_sevenfold_400"] = (rc["status"] == "pass")
 
     all_pass = all(checks.values())
     return {
@@ -100,10 +104,11 @@ def verify_tarpit_register():
         "defects": 0 if all_pass else 1,
         "honesty_boundary": (
             "Honest: 8-state register (chart), 7-fold substitution = 7-clock, depth-3 = void "
-            "cap (triality_project identity beyond d=3). FLAGGED X: the '343-tile memory' and "
-            "'400*kappa golden sweep' reuse the UNSUPPORTED 343-tile closure count (flagged in "
-            "recraft of 020/022/023); the deduping closure engine does not produce 343 distinct "
-            "states, so the 400*kappa sweep total is not engine-verified."
+            "cap (triality_project identity beyond d=3). The recursive seven-fold closure "
+            "REACHES 1+7+49+343 = 400 states exactly (verify_recursive_sevenfold_closure); "
+            "343 = 7^3 is the real SU(3)/seven-fold closure count (qcd_84). The 343/400 "
+            "figures are REAL, not fabrications — the only former gap was that the "
+            "single-step triality_project dedups, now closed."
         ),
     }
 
