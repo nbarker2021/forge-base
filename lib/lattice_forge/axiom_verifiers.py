@@ -211,6 +211,9 @@ AXIOM_VERIFIERS = {
     "verify_unified_energy_transport": lambda: __import__("lattice_forge.energy_quantum", fromlist=["verify_unified_energy_transport"]).verify_unified_energy_transport(),
     "verify_tarpit_mass_formula": lambda: __import__("lattice_forge.energy_quantum", fromlist=["verify_tarpit_mass_formula"]).verify_tarpit_mass_formula(),
     "verify_coupling_transport": lambda: __import__("lattice_forge.energy_quantum", fromlist=["verify_coupling_transport"]).verify_coupling_transport(),
+    "verify_shear_pinch_moduli": lambda: __import__("lattice_forge.tarpit_ecology", fromlist=["verify_shear_pinch_moduli"]).verify_shear_pinch_moduli(),
+    "verify_tarpit_register": lambda: __import__("lattice_forge.tarpit_ecology", fromlist=["verify_tarpit_register"]).verify_tarpit_register(),
+    "verify_knight_register_calibration": lambda: __import__("lattice_forge.tarpit_ecology", fromlist=["verify_knight_register_calibration"]).verify_knight_register_calibration(),
 }
 
 
